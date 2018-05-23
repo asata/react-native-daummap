@@ -1,8 +1,8 @@
 //  Created by react-native-create-bridge
 
 #import <Foundation/Foundation.h>
-#import "KakaoMap.h"
-#import "KakaoMapManager.h"
+#import "DaumMap.h"
+#import "DaumMapManager.h"
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -13,7 +13,7 @@
 #import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
 #endif
 
-@implementation KakaoMapManager
+@implementation DaumMapManager
 
 @synthesize bridge = _bridge;
 
@@ -22,7 +22,7 @@
 RCT_EXPORT_MODULE();
 // Return the native view that represents your React component
 - (UIView *) view {
-  return [[KakaoMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+  return [[DaumMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(mapType, NSString)

@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB51EB0A20B50D0900CEC4FC /* KakaoMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0720B50D0800CEC4FC /* KakaoMapManager.m */; };
-		CB51EB0B20B50D0900CEC4FC /* KakaoMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0920B50D0900CEC4FC /* KakaoMap.m */; };
+		CB51EB0A20B50D0900CEC4FC /* DaumMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */; };
+		CB51EB0B20B50D0900CEC4FC /* DaumMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0920B50D0900CEC4FC /* DaumMap.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,11 +24,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CB51EB0620B50D0800CEC4FC /* KakaoMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KakaoMapManager.h; sourceTree = "<group>"; };
-		CB51EB0720B50D0800CEC4FC /* KakaoMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KakaoMapManager.m; sourceTree = "<group>"; };
-		CB51EB0820B50D0800CEC4FC /* KakaoMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KakaoMap.h; sourceTree = "<group>"; };
-		CB51EB0920B50D0900CEC4FC /* KakaoMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KakaoMap.m; sourceTree = "<group>"; };
-		CBFBFCDB20B50B8500C0C250 /* libKakaoMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKakaoMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB51EB0620B50D0800CEC4FC /* DaumMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMapManager.h; sourceTree = "<group>"; };
+		CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMapManager.m; sourceTree = "<group>"; };
+		CB51EB0820B50D0800CEC4FC /* DaumMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMap.h; sourceTree = "<group>"; };
+		CB51EB0920B50D0900CEC4FC /* DaumMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMap.m; sourceTree = "<group>"; };
+		CBFBFCDB20B50B8500C0C250 /* libDaumMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDaumMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +45,7 @@
 		CBFBFCD220B50B8500C0C250 = {
 			isa = PBXGroup;
 			children = (
-				CBFBFCDD20B50B8500C0C250 /* KakaoMap */,
+				CBFBFCDD20B50B8500C0C250 /* DaumMap */,
 				CBFBFCDC20B50B8500C0C250 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,28 +53,28 @@
 		CBFBFCDC20B50B8500C0C250 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CBFBFCDB20B50B8500C0C250 /* libKakaoMap.a */,
+				CBFBFCDB20B50B8500C0C250 /* libDaumMap.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CBFBFCDD20B50B8500C0C250 /* KakaoMap */ = {
+		CBFBFCDD20B50B8500C0C250 /* DaumMap */ = {
 			isa = PBXGroup;
 			children = (
-				CB51EB0820B50D0800CEC4FC /* KakaoMap.h */,
-				CB51EB0920B50D0900CEC4FC /* KakaoMap.m */,
-				CB51EB0620B50D0800CEC4FC /* KakaoMapManager.h */,
-				CB51EB0720B50D0800CEC4FC /* KakaoMapManager.m */,
+				CB51EB0820B50D0800CEC4FC /* DaumMap.h */,
+				CB51EB0920B50D0900CEC4FC /* DaumMap.m */,
+				CB51EB0620B50D0800CEC4FC /* DaumMapManager.h */,
+				CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */,
 			);
-			path = KakaoMap;
+			path = DaumMap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CBFBFCDA20B50B8500C0C250 /* KakaoMap */ = {
+		CBFBFCDA20B50B8500C0C250 /* DaumMap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CBFBFCE420B50B8500C0C250 /* Build configuration list for PBXNativeTarget "KakaoMap" */;
+			buildConfigurationList = CBFBFCE420B50B8500C0C250 /* Build configuration list for PBXNativeTarget "DaumMap" */;
 			buildPhases = (
 				CBFBFCD720B50B8500C0C250 /* Sources */,
 				CBFBFCD820B50B8500C0C250 /* Frameworks */,
@@ -84,9 +84,9 @@
 			);
 			dependencies = (
 			);
-			name = KakaoMap;
+			name = DaumMap;
 			productName = KakaoMap;
-			productReference = CBFBFCDB20B50B8500C0C250 /* libKakaoMap.a */;
+			productReference = CBFBFCDB20B50B8500C0C250 /* libDaumMap.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -103,7 +103,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CBFBFCD620B50B8500C0C250 /* Build configuration list for PBXProject "KakaoMap" */;
+			buildConfigurationList = CBFBFCD620B50B8500C0C250 /* Build configuration list for PBXProject "DaumMap" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,7 +115,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CBFBFCDA20B50B8500C0C250 /* KakaoMap */,
+				CBFBFCDA20B50B8500C0C250 /* DaumMap */,
 			);
 		};
 /* End PBXProject section */
@@ -125,8 +125,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB51EB0A20B50D0900CEC4FC /* KakaoMapManager.m in Sources */,
-				CB51EB0B20B50D0900CEC4FC /* KakaoMap.m in Sources */,
+				CB51EB0A20B50D0900CEC4FC /* DaumMapManager.m in Sources */,
+				CB51EB0B20B50D0900CEC4FC /* DaumMap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +276,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CBFBFCD620B50B8500C0C250 /* Build configuration list for PBXProject "KakaoMap" */ = {
+		CBFBFCD620B50B8500C0C250 /* Build configuration list for PBXProject "DaumMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBFBFCE220B50B8500C0C250 /* Debug */,
@@ -285,7 +285,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CBFBFCE420B50B8500C0C250 /* Build configuration list for PBXNativeTarget "KakaoMap" */ = {
+		CBFBFCE420B50B8500C0C250 /* Build configuration list for PBXNativeTarget "DaumMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CBFBFCE520B50B8500C0C250 /* Debug */,

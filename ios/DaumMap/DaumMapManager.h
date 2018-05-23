@@ -11,6 +11,6 @@
 
 // Subclass your view manager off the RCTViewManager
 // http://facebook.github.io/react-native/docs/native-components-ios.html#ios-mapview-example
-@interface KakaoMapManager : RCTViewManager
+@interface DaumMapManager : RCTViewManager
 
 @end

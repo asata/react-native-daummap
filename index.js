@@ -1,36 +1,24 @@
-//  Created by react-native-create-bridge
-
 import React, { Component } from 'react'
 import { requireNativeComponent } from 'react-native'
 
-const KakaoMap = requireNativeComponent('KakaoMap', KakaoMapView)
+const DaumMap = requireNativeComponent('DaumMap', DaumMapView)
 
-export default class KakaoMapView extends Component {
+export default class DaumMapView extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			// isReady: Platform.OS === 'ios',
+
 		};
-		
-		// this._onMapReady = this._onMapReady.bind(this);
 	}
 
 	render () {
-		return <KakaoMap
+		return <DaumMap
 			ref={ref => { this.map = ref; }}
 			{...this.props} />
 	}
-	
-	// _onMapReady() {
-	// 	const { region, initialRegion, onMapReady } = this.props;
-
-	// 	if (initialRegion) {
-	// 		this.map.setNativeProps({ initialRegion });
-	// 	}
-	// }
 }
 
 KakaoMapView.propTypes = {
-	// exampleProp: React.PropTypes.any
+
 }

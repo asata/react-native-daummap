@@ -1,5 +1,5 @@
 {
-  "name": "react-native-kakaomap",
+  "name": "react-native-daummap",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/asata/react-native-kakaomap.git"
+    "url": "git+https://github.com/asata/react-native-daummap.git"
   },
   "keywords": [
     "map",
@@ -17,7 +17,7 @@
   "author": "JeongHun Kang <asata@teamsf.co.kr>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/asata/react-native-kakaomap/issues"
+    "url": "https://github.com/asata/react-native-daummap/issues"
   },
-  "homepage": "https://github.com/asata/react-native-kakaomap#readme"
+  "homepage": "https://github.com/asata/react-native-daummap#readme"
 }

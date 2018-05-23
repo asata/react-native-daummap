@@ -1,6 +1,6 @@
 //  Created by react-native-create-bridge
 #import <Foundation/Foundation.h>
-#import "KakaoMap.h"
+#import "DaumMap.h"
 #import <DaumMap/MTMapView.h>
 
 // import RCTEventDispatcher
@@ -13,7 +13,7 @@
 #endif
 
 
-@implementation KakaoMap : UIView  {
+@implementation DaumMap : UIView  {
   RCTEventDispatcher *_eventDispatcher;
   MTMapView *_mapView;
 }
