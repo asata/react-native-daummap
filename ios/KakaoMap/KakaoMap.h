@@ -1,14 +1,16 @@
 //  Created by react-native-create-bridge
 
-// import RCTBridgeModule
-#if __has_include(<React/RCTBridgeModule.h>)
-#import <React/RCTBridgeModule.h>
-#elif __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
-#import "React/RCTBridgeModule.h" // Required when used as a Pod in a Swift project
-#endif
+// import UIKit so you can subclass off UIView
+#import <UIKit/UIKit.h>
 
-@interface KakaoMap : NSObject <RCTBridgeModule>
-  // Define class properties here with @property
+@class RCTEventDispatcher;
+
+@interface KakaoMap : UIView
+  // Define view properties here with @property
+//  @property (nonatomic, assign) NSString *exampleProp;
+  @property (nonatomic, assign) NSMutableDictionary *initialRegion;
+
+  // Initializing with the event dispatcher allows us to communicate with JS
+  - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
+
 @end

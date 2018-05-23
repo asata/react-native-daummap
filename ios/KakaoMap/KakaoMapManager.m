@@ -1,6 +1,8 @@
 //  Created by react-native-create-bridge
 
+#import <Foundation/Foundation.h>
 #import "KakaoMap.h"
+#import "KakaoMapManager.h"
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -11,51 +13,31 @@
 #import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
 #endif
 
-// import RCTEventDispatcher
-#if __has_include(<React/RCTEventDispatcher.h>)
-#import <React/RCTEventDispatcher.h>
-#elif __has_include("RCTEventDispatcher.h")
-#import “RCTEventDispatcher.h”
-#else
-#import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
-#endif
+@implementation KakaoMapManager
 
-@implementation KakaoMap
 @synthesize bridge = _bridge;
 
 // Export a native module
 // https://facebook.github.io/react-native/docs/native-modules-ios.html
 RCT_EXPORT_MODULE();
-
-// Export constants
-// https://facebook.github.io/react-native/releases/next/docs/native-modules-ios.html#exporting-constants
-- (NSDictionary *)constantsToExport
-{
-  return @{
-           @"EXAMPLE": @"example"
-         };
-}
-
 // Return the native view that represents your React component
-- (UIView *)view
-{
-  return [[UIView alloc] init];
+- (UIView *) view {
+  return [[KakaoMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
-// Export methods to a native module
-// https://facebook.github.io/react-native/docs/native-modules-ios.html
-RCT_EXPORT_METHOD(exampleMethod)
-{
-  [self emitMessageToRN:@"EXAMPLE_EVENT" :nil];
-}
+RCT_EXPORT_VIEW_PROPERTY(mapType, NSString)
+RCT_EXPORT_VIEW_PROPERTY(markers, NSArray)
+RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
 
-#pragma mark - Private methods
 
-// Implement methods that you want to export to the native module
-- (void) emitMessageToRN: (NSString *)eventName :(NSDictionary *)params {
-  // The bridge eventDispatcher is used to send events from native to JS env
-  // No documentation yet on DeviceEventEmitter: https://github.com/facebook/react-native/issues/2819
-  [self.bridge.eventDispatcher sendAppEventWithName: eventName body: params];
-}
+//RCT_EXPORT_VIEW_PROPERTY(exampleProp, NSString)
+//// Export constants
+//// https://facebook.github.io/react-native/releases/next/docs/native-modules-ios.html#exporting-constants
+//- (NSDictionary *)constantsToExport
+//{
+//  return @{
+//           @"EXAMPLE": @"example"
+//           };
+//}
 
 @end
