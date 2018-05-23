@@ -19,6 +19,6 @@ export default class DaumMapView extends Component {
 	}
 }
 
-KakaoMapView.propTypes = {
+DaumMapView.propTypes = {
 
 }
