@@ -116,7 +116,7 @@ public class MainApplication extends Application implements ReactApplication {
 4. 패키지명에 개발 앱 패키지명 추가
 5. 키 해시는 터미널에서 아래 명령 수행한 결과 값 입력
 ```
-keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass android -keypass android
+keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass android -keypass android | openssl sha1 -binary | openssl base64
 ```
 - Debug일 경우 Keystore 경로는 ~/.android/debug.keystore에 저장되며 비밀번호는 android
 6. 상단에 있는 "네이티브 앱 키"를 복사
