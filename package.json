@@ -31,7 +31,7 @@
         }
     },
     "author": "JeongHun Kang <asata@teamsf.co.kr>",
-    "license": "ISC",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/asata/react-native-daummap/issues"
     },
