@@ -1,7 +1,7 @@
 {
     "name": "react-native-daummap",
     "version": "0.1.0",
-    "description": "react-native에서 다음 지도 사용",
+    "description": "react-native use daum map",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
