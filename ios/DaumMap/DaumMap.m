@@ -26,6 +26,10 @@
                                                                self.bounds.size.height)];
         _mapView.delegate = self;
         _mapView.baseMapType = MTMapTypeHybrid;
+
+        _latdouble = 36.143099;
+        _londouble = 128.392905;
+        _zoomLevel = 2;
     }
 
     return self;
@@ -37,6 +41,18 @@
     [self addSubview:_mapView];
 }
 
+- (void) setInitialRegion:(NSDictionary *)region {
+    if ([region valueForKey:@"latitude"] != [NSNull null]) {
+        _latdouble = [[region valueForKey:@"latitude"] floatValue];
+    }
+    if ([region valueForKey:@"longitude"] != [NSNull null]) {
+        _londouble = [[region valueForKey:@"longitude"] floatValue];
+    }
+    if ([region valueForKey:@"zoomLevel"] != [NSNull null]) {
+        _zoomLevel = [[region valueForKey:@"zoomLevel"] intValue];
+    }
+}
+
 - (void) setMarkers:(NSArray *)markers {
     NSArray   *markerList = [NSArray arrayWithObjects: nil];
 
@@ -45,7 +61,6 @@
         NSString *itemName = [dict valueForKey:@"name"];
         NSString *pinColor = [dict valueForKey:@"pinColor"];
         NSString *selectPinColor = [dict valueForKey:@"selectPinColor"];
-        
         MTMapPOIItemMarkerType markerColor = MTMapPOIItemMarkerTypeBluePin;
         if ([pinColor isEqualToString:@"red"]) {
             markerColor = MTMapPOIItemMarkerTypeRedPin;
@@ -74,7 +89,7 @@
         markerItem.mapPoint = [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)];
         markerItem.markerType = markerColor;
         markerItem.markerSelectedType = sMarkerColor;
-        // markerItem.showAnimationType = MTMapPOIItemShowAnimationTypeNoAnimation; // Item이 화면에 추가될때 애니매이션
+        markerItem.showAnimationType = MTMapPOIItemShowAnimationTypeSpringFromGround; // Item이 화면에 추가될때 애니매이션
         markerItem.draggable = NO;
         markerItem.tag = i;
         markerItem.showDisclosureButtonOnCalloutBalloon = NO;
@@ -98,22 +113,22 @@
     }
 }
 
-- (void) setInitialRegion:(NSDictionary *)region {
-    float latdouble = 36.143099;
-    float londouble = 128.392905;
-    int zoomLevel   = 2;
+- (void) setRegion:(NSDictionary *)region {
+    if ([region valueForKey:@"latitude"] != [NSNull null] && [region valueForKey:@"longitude"] != [NSNull null]) {
+        float latdouble = [[region valueForKey:@"latitude"] floatValue];
+        float londouble = [[region valueForKey:@"longitude"] floatValue];
 
-    if ([region valueForKey:@"latitude"] != [NSNull null]) {
-        latdouble = [[region valueForKey:@"latitude"] floatValue];
+        [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)] animated:YES];
     }
-    if ([region valueForKey:@"longitude"] != [NSNull null]) {
-        londouble = [[region valueForKey:@"longitude"] floatValue];
-    }
-    if ([region valueForKey:@"zoomLevel"] != [NSNull null]) {
-        zoomLevel = [[region valueForKey:@"zoomLevel"] intValue];
-    }
+}
 
-    [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)] zoomLevel:zoomLevel animated:YES];
+/****************************************************************/
+// 이벤트 처리 시작
+/****************************************************************/
+- (void)mapView:(MTMapView*)mapView openAPIKeyAuthenticationResultCode:(int)resultCode resultMessage:(NSString*)resultMessage {
+//    NSLog(@"openAPIKeyAuthenticationResultCode : %d %@", resultCode, resultMessage);
+
+    [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_latdouble, _londouble)] zoomLevel:_zoomLevel animated:YES];
 }
 
 - (BOOL)mapView:(MTMapView*)mapView selectedPOIItem:(MTMapPOIItem*)poiItem {
@@ -125,7 +140,7 @@
                     @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
                 }
             };
-    if (self.onMarkerSelectEvent) self.onMarkerSelectEvent(event);
+    if (self.onMarkerSelect) self.onMarkerSelect(event);
 
     return YES;
 }
@@ -139,7 +154,17 @@
                     @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
                 }
             };
-    if (self.onMarkerPressEvent) self.onMarkerPressEvent(event);
-    NSLog(@"touchedCalloutBalloonOfPOIItem");
+    if (self.onMarkerPress) self.onMarkerPress(event);
+}
+
+- (void)mapView:(MTMapView*)mapView centerPointMovedTo:(MTMapPoint*)mapCenterPoint {
+    id event = @{
+                 @"action": @"regionChange",
+                 @"coordinate": @{
+                         @"latitude": @(mapCenterPoint.mapPointGeo.latitude),
+                         @"longitude": @(mapCenterPoint.mapPointGeo.longitude)
+                     }
+             };
+    if (self.onRegionChange) self.onRegionChange(event);
 }
 @end

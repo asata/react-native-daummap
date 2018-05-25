@@ -29,10 +29,10 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	public static final String TAG = "DaumMap";
 	private final ReactApplicationContext appContext;
 	private RNMapView rnMapView;
+	private boolean initialRegionSet = false;
 
 	public DaumMapManager (ReactApplicationContext context) {
 		super();
-
 		this.appContext = context;
 	}
 
@@ -50,7 +50,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 		rMapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
 			public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int resultCode, String resultMessage) {
-				Log.i(TAG, String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
+				// Log.i(TAG, String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
 			}
 		});
 
@@ -63,10 +63,13 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	@ReactProp(name = "initialRegion")
 	public void setInitialRegion(MapView mMapView, ReadableMap initialRegion) {
 		double latitude 	= initialRegion.hasKey("latitude") ? initialRegion.getDouble("latitude") : 36.143099;
-		double longitude 	= initialRegion.hasKey("longitude") ? initialRegion.getDouble("longitude") : 128.392905;
-		int zoomLevel 		= initialRegion.hasKey("zoomLevel") ? initialRegion.getInt("zoomLevel") : 2;
+		double longitude	= initialRegion.hasKey("longitude") ? initialRegion.getDouble("longitude") : 128.392905;
+		int    zoomLevel 	= initialRegion.hasKey("zoomLevel") ? initialRegion.getInt("zoomLevel") : 2;
 
-		mMapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude, longitude), zoomLevel, true);
+		if (!initialRegionSet) {
+			mMapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(latitude, longitude), zoomLevel, true);
+			initialRegionSet = true;
+		}
 	}
 
 	@ReactProp(name = "mapType")
@@ -122,9 +125,10 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 			marker.setTag(i);
 			marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
-			marker.setMarkerType(markerType); 							// 기본으로 제공하는 BluePin 마커 모양.
-			marker.setSelectedMarkerType(sMarkerType); 					// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-			marker.setShowDisclosureButtonOnCalloutBalloon(false);		// 마커 클릭시, 말풍선 오른쪽에 나타나는 > 표시 여부
+			marker.setMarkerType(markerType); 											// 기본으로 제공하는 BluePin 마커 모양.
+			marker.setSelectedMarkerType(sMarkerType); 									// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+			marker.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround); // 마커 추가시 효과
+			marker.setShowDisclosureButtonOnCalloutBalloon(false);						// 마커 클릭시, 말풍선 오른쪽에 나타나는 > 표시 여부
 			marker.setDraggable(false);
 
 			mMapView.addPOIItem(marker);
@@ -135,8 +139,9 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	@Nullable
 	public Map getExportedCustomDirectEventTypeConstants() {
 	Map<String, Map<String, String>> map = MapBuilder.of(
-		"onMarkerSelectEvent", MapBuilder.of("registrationName", "onMarkerSelectEvent"),
-		"onMarkerPressEvent", MapBuilder.of("registrationName", "onMarkerPressEvent")
+		"onMarkerSelect", MapBuilder.of("registrationName", "onMarkerSelect"),
+		"onMarkerPress", MapBuilder.of("registrationName", "onMarkerPress"),
+		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange")
 	);
 
 	// map.putAll(MapBuilder.of(
@@ -160,6 +165,15 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	// 지도 중심 좌표가 이동했을 때
 	@Override
 	public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapCenterPoint) {
+		WritableMap event = new WritableNativeMap();
+
+		WritableMap coordinate = new WritableNativeMap();
+		coordinate.putDouble("latitude", mapCenterPoint.getMapPointGeoCoord().latitude);
+		coordinate.putDouble("longitude", mapCenterPoint.getMapPointGeoCoord().longitude);
+		event.putMap("coordinate", coordinate);
+		event.putString("action", "regionChange");
+
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onRegionChange", event);
 
 	}
 
@@ -201,7 +215,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	@Override
 	public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
-
+		// Log.d(TAG, "onMapViewMoveFinished");
 	}
 
 
@@ -220,7 +234,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		event.putString("action", "markerSelect");
 		event.putInt("id", poiItem.getTag());
 
-		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onMarkerSelectEvent", event);
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onMarkerSelect", event);
 	}
 
 	// Marker 말풍선을 선택한 경우
@@ -235,7 +249,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		event.putString("action", "markerPress");
 		event.putInt("id", poiItem.getTag());
 
-		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onMarkerPressEvent", event);
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onMarkerPress", event);
 
 	}
 	@Override

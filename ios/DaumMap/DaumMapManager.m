@@ -14,11 +14,13 @@ RCT_EXPORT_MODULE();
   return [[DaumMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
 }
 
+RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
 RCT_EXPORT_VIEW_PROPERTY(mapType, NSString)
 RCT_EXPORT_VIEW_PROPERTY(markers, NSArray)
-RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
-RCT_EXPORT_VIEW_PROPERTY(onMarkerSelectEvent, RCTDirectEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(onMarkerPressEvent, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(region, NSDictionary)
+RCT_EXPORT_VIEW_PROPERTY(onMarkerSelect, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onMarkerPress, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onRegionChange, RCTDirectEventBlock)
 
 
 //RCT_EXPORT_VIEW_PROPERTY(exampleProp, NSString)
