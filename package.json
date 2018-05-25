@@ -1,39 +1,39 @@
 {
-    "name": "react-native-daummap",
-    "version": "0.1.0",
-    "description": "react-native use daum map",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-    "type": "git",
-    "url": "git+https://github.com/asata/react-native-daummap.git"
-    },
-    "keywords": [
-        "map",
-        "daum",
-        "kakao",
-        "react-naive",
-        "daum map"
-    ],
-    "rnpm": {
-        "ios": {
-            "sharedLibraries": [
-                "libxml2",
-                "libsqlite3",
-                "libstdc++",
-                "SystemConfiguration",
-                "CoreLocation",
-                "OpenGLES",
-                "QuartzCore"
-            ]
-        }
-    },
-    "author": "JeongHun Kang <asata@teamsf.co.kr>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/asata/react-native-daummap/issues"
-    },
-    "homepage": "https://github.com/asata/react-native-daummap#readme"
+	"name": "react-native-daummap",
+	"version": "0.1.0",
+	"description": "react-native use daum map",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+	"type": "git",
+		"url": "git+https://github.com/asata/react-native-daummap.git"
+	},
+	"keywords": [
+		"map",
+		"daum",
+		"kakao",
+		"react-naive",
+		"daum map"
+	],
+	"rnpm": {
+		"ios": {
+			"sharedLibraries": [
+				"libxml2",
+				"libsqlite3",
+				"libstdc++",
+				"SystemConfiguration",
+				"CoreLocation",
+				"OpenGLES",
+				"QuartzCore"
+			]
+		}
+	},
+	"author": "JeongHun Kang <asata@teamsf.co.kr>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/asata/react-native-daummap/issues"
+	},
+	"homepage": "https://github.com/asata/react-native-daummap#readme"
 }
