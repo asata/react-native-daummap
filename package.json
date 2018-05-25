@@ -18,21 +18,22 @@
         "daum map"
     ],
     "rnpm": {
-    "ios": {
-        "sharedLibraries": [
-            "libxml2",
-            "libsqlite3",
-            "libstdc++",
-            "SystemConfiguration",
-            "CoreLocation",
-            "OpenGLES",
-            "QuartzCore"
-        ]
+        "ios": {
+            "sharedLibraries": [
+                "libxml2",
+                "libsqlite3",
+                "libstdc++",
+                "SystemConfiguration",
+                "CoreLocation",
+                "OpenGLES",
+                "QuartzCore"
+            ]
+        }
     },
     "author": "JeongHun Kang <asata@teamsf.co.kr>",
     "license": "ISC",
     "bugs": {
-    "url": "https://github.com/asata/react-native-daummap/issues"
+        "url": "https://github.com/asata/react-native-daummap/issues"
     },
     "homepage": "https://github.com/asata/react-native-daummap#readme"
 }
