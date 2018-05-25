@@ -1,17 +1,6 @@
-//  Created by react-native-create-bridge
-
 #import <Foundation/Foundation.h>
 #import "DaumMap.h"
 #import "DaumMapManager.h"
-
-// import RCTBridge
-#if __has_include(<React/RCTBridge.h>)
-#import <React/RCTBridge.h>
-#elif __has_include("RCTBridge.h")
-#import "RCTBridge.h"
-#else
-#import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
-#endif
 
 @implementation DaumMapManager
 
@@ -28,6 +17,8 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_VIEW_PROPERTY(mapType, NSString)
 RCT_EXPORT_VIEW_PROPERTY(markers, NSArray)
 RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
+RCT_EXPORT_VIEW_PROPERTY(onMarkerSelectEvent, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onMarkerPressEvent, RCTDirectEventBlock)
 
 
 //RCT_EXPORT_VIEW_PROPERTY(exampleProp, NSString)
