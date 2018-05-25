@@ -119,8 +119,8 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 			}
 
 			MapPOIItem marker = new MapPOIItem();
-			if (markerInfo.hasKey("name")) {
-				marker.setItemName(markerInfo.getString("name"));
+			if (markerInfo.hasKey("title")) {
+				marker.setItemName(markerInfo.getString("title"));
 			}
 
 			marker.setTag(i);

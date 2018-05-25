@@ -58,7 +58,7 @@
 
     for (int i = 0; i < [markers count]; i++) {
         NSDictionary *dict = [markers objectAtIndex:i];
-        NSString *itemName = [dict valueForKey:@"name"];
+        NSString *markerTitle = [dict valueForKey:@"title"];
         NSString *pinColor = [dict valueForKey:@"pinColor"];
         NSString *selectPinColor = [dict valueForKey:@"selectPinColor"];
         MTMapPOIItemMarkerType markerColor = MTMapPOIItemMarkerTypeBluePin;
@@ -82,7 +82,7 @@
         }
 
         MTMapPOIItem* markerItem = [MTMapPOIItem poiItem];
-        if (itemName != NULL) markerItem.itemName = itemName;
+        if (markerTitle != NULL) markerItem.itemName = markerTitle;
         float latdouble = [[dict valueForKey:@"latitude"] floatValue];
         float londouble = [[dict valueForKey:@"longitude"] floatValue];
 

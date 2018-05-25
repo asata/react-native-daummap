@@ -32,7 +32,6 @@ export default class DaumMapView extends Component {
 		if (this.props.onMarkerSelect != undefined) {
 			this.props.onMarkerSelect(event.nativeEvent);
 		}
-		console.log("_onMarkerSelectEvent", event)
 	}
 
 	_onMarkerPress = (event) => {

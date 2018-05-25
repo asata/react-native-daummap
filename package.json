@@ -13,7 +13,9 @@
     "keywords": [
         "map",
         "daum",
-        "kakao"
+        "kakao",
+        "react-naive",
+        "daum map"
     ],
     "rnpm": {
     "ios": {
