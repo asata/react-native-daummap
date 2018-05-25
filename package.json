@@ -1,23 +1,36 @@
 {
-  "name": "react-native-daummap",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
+    "name": "react-native-daummap",
+    "version": "0.1.0",
+    "description": "react-native에서 다음 지도 사용",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
     "type": "git",
     "url": "git+https://github.com/asata/react-native-daummap.git"
-  },
-  "keywords": [
-    "map",
-    "kakao"
-  ],
-  "author": "JeongHun Kang <asata@teamsf.co.kr>",
-  "license": "ISC",
-  "bugs": {
+    },
+    "keywords": [
+        "map",
+        "daum",
+        "kakao"
+    ],
+    "rnpm": {
+    "ios": {
+        "sharedLibraries": [
+            "libxml2",
+            "libsqlite3",
+            "libstdc++",
+            "SystemConfiguration",
+            "CoreLocation",
+            "OpenGLES",
+            "QuartzCore"
+        ]
+    },
+    "author": "JeongHun Kang <asata@teamsf.co.kr>",
+    "license": "ISC",
+    "bugs": {
     "url": "https://github.com/asata/react-native-daummap/issues"
-  },
-  "homepage": "https://github.com/asata/react-native-daummap#readme"
+    },
+    "homepage": "https://github.com/asata/react-native-daummap#readme"
 }

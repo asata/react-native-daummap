@@ -24,7 +24,7 @@ public class DaumMapPackage implements ReactPackage {
 		// Register your native component's view manager
 		// https://facebook.github.io/react-native/docs/native-components-android.html#4-register-the-viewmanager
 		return Arrays.<ViewManager>asList(
-			new DaumMapManager()
+			new DaumMapManager(reactContext)
 		);
 	}
 }
