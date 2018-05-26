@@ -22,7 +22,7 @@
 			"sharedLibraries": [
 				"libxml2",
 				"libsqlite3",
-				"libstdc++",
+				"libstdc++.6",
 				"SystemConfiguration",
 				"CoreLocation",
 				"OpenGLES",
