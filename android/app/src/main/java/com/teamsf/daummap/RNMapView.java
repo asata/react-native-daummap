@@ -20,6 +20,7 @@ public class RNMapView extends MapView {
 		super(themedReactContext.getCurrentActivity(), null);
 		mContext = themedReactContext;
 
+		this.setMapTilePersistentCacheEnabled(true);
 		String apiKey = null;
 		try {
 			ApplicationInfo ai = appContext.getPackageManager().getApplicationInfo(appContext.getApplicationContext().getPackageName(), PackageManager.GET_META_DATA);

@@ -20,6 +20,7 @@
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
 
+        [MTMapView setMapTilePersistentCacheEnabled:YES];
         _mapView = [[MTMapView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                self.bounds.origin.y,
                                                                self.bounds.size.width,
