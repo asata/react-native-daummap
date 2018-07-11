@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB0B0C5920F61A0000FFAD5C /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */; };
 		CB51EB0A20B50D0900CEC4FC /* DaumMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */; };
 		CB51EB0B20B50D0900CEC4FC /* DaumMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0920B50D0900CEC4FC /* DaumMap.m */; };
-		CBEFBE4220B637EC00FB8B98 /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEFBE4120B637EC00FB8B98 /* DaumMap.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,38 +25,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		CB51EB0620B50D0800CEC4FC /* DaumMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMapManager.h; sourceTree = "<group>"; };
 		CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMapManager.m; sourceTree = "<group>"; };
 		CB51EB0820B50D0800CEC4FC /* DaumMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMap.h; sourceTree = "<group>"; };
 		CB51EB0920B50D0900CEC4FC /* DaumMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMap.m; sourceTree = "<group>"; };
-		CBEFBE2620B637EC00FB8B98 /* map_pinup_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup_custom@3x.png"; sourceTree = "<group>"; };
-		CBEFBE2720B637EC00FB8B98 /* map_pin_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_custom.png; sourceTree = "<group>"; };
-		CBEFBE2820B637EC00FB8B98 /* shadow_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow_balloon.png; sourceTree = "<group>"; };
-		CBEFBE2920B637EC00FB8B98 /* map_pinup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pinup.png; sourceTree = "<group>"; };
-		CBEFBE2A20B637EC00FB8B98 /* detail_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail_button.png; sourceTree = "<group>"; };
-		CBEFBE2B20B637EC00FB8B98 /* map_pin_custom@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_custom@3x.png"; sourceTree = "<group>"; };
-		CBEFBE2C20B637EC00FB8B98 /* map_pinup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pinup@3x.png"; sourceTree = "<group>"; };
-		CBEFBE2D20B637EC00FB8B98 /* map_pin_shadow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_shadow@3x.png"; sourceTree = "<group>"; };
-		CBEFBE2E20B637EC00FB8B98 /* copyright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copyright.png; sourceTree = "<group>"; };
-		CBEFBE2F20B637EC00FB8B98 /* th_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = th_line.png; sourceTree = "<group>"; };
-		CBEFBE3020B637EC00FB8B98 /* map_pin_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin_red@3x.png"; sourceTree = "<group>"; };
-		CBEFBE3120B637EC00FB8B98 /* daum_copyright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daum_copyright.png; sourceTree = "<group>"; };
-		CBEFBE3220B637EC00FB8B98 /* map_pin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map_pin@3x.png"; sourceTree = "<group>"; };
-		CBEFBE3320B637EC00FB8B98 /* map_present_tracking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_tracking.png; sourceTree = "<group>"; };
-		CBEFBE3420B637EC00FB8B98 /* map_pin_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_red.png; sourceTree = "<group>"; };
-		CBEFBE3520B637EC00FB8B98 /* info_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_box.png; sourceTree = "<group>"; };
-		CBEFBE3620B637EC00FB8B98 /* point_sprite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point_sprite.png; sourceTree = "<group>"; };
-		CBEFBE3720B637EC00FB8B98 /* map_pinup_custom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pinup_custom.png; sourceTree = "<group>"; };
-		CBEFBE3820B637EC00FB8B98 /* info_box_tail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info_box_tail.png; sourceTree = "<group>"; };
-		CBEFBE3920B637EC00FB8B98 /* noimage256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage256.png; sourceTree = "<group>"; };
-		CBEFBE3A20B637EC00FB8B98 /* map_present_direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_direction.png; sourceTree = "<group>"; };
-		CBEFBE3B20B637EC00FB8B98 /* map_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin.png; sourceTree = "<group>"; };
-		CBEFBE3C20B637EC00FB8B98 /* map_present.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present.png; sourceTree = "<group>"; };
-		CBEFBE3D20B637EC00FB8B98 /* noimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noimage.png; sourceTree = "<group>"; };
-		CBEFBE3E20B637EC00FB8B98 /* map_present_background_update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_present_background_update.png; sourceTree = "<group>"; };
-		CBEFBE3F20B637EC00FB8B98 /* daum_th_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = daum_th_line.png; sourceTree = "<group>"; };
-		CBEFBE4020B637EC00FB8B98 /* map_pin_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_pin_shadow.png; sourceTree = "<group>"; };
-		CBEFBE4120B637EC00FB8B98 /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		CBFBFCDB20B50B8500C0C250 /* libDaumMap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDaumMap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,60 +38,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBEFBE4220B637EC00FB8B98 /* DaumMap.framework in Frameworks */,
+				CB0B0C5920F61A0000FFAD5C /* DaumMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CBEFBE2420B637EC00FB8B98 /* DaumMap.embeddedframework */ = {
+		CB0B0C5720F619D700FFAD5C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CBEFBE2520B637EC00FB8B98 /* Resources */,
-				CBEFBE4120B637EC00FB8B98 /* DaumMap.framework */,
+				CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */,
 			);
-			path = DaumMap.embeddedframework;
-			sourceTree = "<group>";
-		};
-		CBEFBE2520B637EC00FB8B98 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				CBEFBE2620B637EC00FB8B98 /* map_pinup_custom@3x.png */,
-				CBEFBE2720B637EC00FB8B98 /* map_pin_custom.png */,
-				CBEFBE2820B637EC00FB8B98 /* shadow_balloon.png */,
-				CBEFBE2920B637EC00FB8B98 /* map_pinup.png */,
-				CBEFBE2A20B637EC00FB8B98 /* detail_button.png */,
-				CBEFBE2B20B637EC00FB8B98 /* map_pin_custom@3x.png */,
-				CBEFBE2C20B637EC00FB8B98 /* map_pinup@3x.png */,
-				CBEFBE2D20B637EC00FB8B98 /* map_pin_shadow@3x.png */,
-				CBEFBE2E20B637EC00FB8B98 /* copyright.png */,
-				CBEFBE2F20B637EC00FB8B98 /* th_line.png */,
-				CBEFBE3020B637EC00FB8B98 /* map_pin_red@3x.png */,
-				CBEFBE3120B637EC00FB8B98 /* daum_copyright.png */,
-				CBEFBE3220B637EC00FB8B98 /* map_pin@3x.png */,
-				CBEFBE3320B637EC00FB8B98 /* map_present_tracking.png */,
-				CBEFBE3420B637EC00FB8B98 /* map_pin_red.png */,
-				CBEFBE3520B637EC00FB8B98 /* info_box.png */,
-				CBEFBE3620B637EC00FB8B98 /* point_sprite.png */,
-				CBEFBE3720B637EC00FB8B98 /* map_pinup_custom.png */,
-				CBEFBE3820B637EC00FB8B98 /* info_box_tail.png */,
-				CBEFBE3920B637EC00FB8B98 /* noimage256.png */,
-				CBEFBE3A20B637EC00FB8B98 /* map_present_direction.png */,
-				CBEFBE3B20B637EC00FB8B98 /* map_pin.png */,
-				CBEFBE3C20B637EC00FB8B98 /* map_present.png */,
-				CBEFBE3D20B637EC00FB8B98 /* noimage.png */,
-				CBEFBE3E20B637EC00FB8B98 /* map_present_background_update.png */,
-				CBEFBE3F20B637EC00FB8B98 /* daum_th_line.png */,
-				CBEFBE4020B637EC00FB8B98 /* map_pin_shadow.png */,
-			);
-			path = Resources;
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		CBFBFCD220B50B8500C0C250 = {
 			isa = PBXGroup;
 			children = (
-				CBEFBE2420B637EC00FB8B98 /* DaumMap.embeddedframework */,
+				CB0B0C5720F619D700FFAD5C /* Frameworks */,
 				CBFBFCDD20B50B8500C0C250 /* DaumMap */,
 				CBFBFCDC20B50B8500C0C250 /* Products */,
 			);
@@ -325,6 +263,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -341,6 +280,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DaumMap.embeddedframework",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
