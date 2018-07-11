@@ -21,14 +21,18 @@
 @interface DaumMap : UIView
   // Define view properties here with @property
     @property (nonatomic, assign) NSMutableDictionary *initialRegion;
-    @property (nonatomic, assign) NSMutableDictionary *region;
     @property (nonatomic, copy) RCTDirectEventBlock onMarkerSelect;
     @property (nonatomic, copy) RCTDirectEventBlock onMarkerPress;
     @property (nonatomic, copy) RCTDirectEventBlock onRegionChange;
+    @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentLocation;
 
     @property (nonatomic, assign) float latdouble;
     @property (nonatomic, assign) float londouble;
     @property (nonatomic, assign) NSInteger zoomLevel;
+
+    @property (nonatomic, assign) BOOL isTracking;
+    @property (nonatomic, assign) BOOL isCompass;
+    @property (nonatomic, assign) BOOL isCurrentMarker;
 
   // Initializing with the event dispatcher allows us to communicate with JS
   - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;

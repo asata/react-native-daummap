@@ -22,9 +22,13 @@ export default class DaumMapView extends Component {
 	render () {
 		return <DaumMap
 			ref={ref => { this.map = ref; }}
+			isTracking={this.props.isTracking}
+			isCompass={this.props.isCompass}
+			isCurrentMarker={this.props.isCurrentMarker}
 			onMarkerSelect={this._onMarkerSelect}
 			onMarkerPress={this._onMarkerPress}
 			onRegionChange={this._onRegionChange}
+			onUpdateCurrentLocation={this._onUpdateCurrentLocation}
 			{...this.props} />
 	}
 
@@ -45,10 +49,29 @@ export default class DaumMapView extends Component {
 			this.props.onRegionChange(event.nativeEvent);
 		}
 	}
+
+	_onUpdateCurrentLocation = (event) => {
+		if (this.props.onUpdateCurrentLocation != undefined) {
+			this.props.onUpdateCurrentLocation(event.nativeEvent);
+		}
+
+		console.log("onUpdateCurrentLocation", event.nativeEvent);
+	}
 }
 
 DaumMapView.propTypes = {
-	onMarkerSelect: PropTypes.func,
-	onMarkerPress: PropTypes.func,
-	onRegionChange: PropTypes.func
+	isTracking 				: PropTypes.bool,
+	isCompass 				: PropTypes.bool,
+	isCurrentMarker 		: PropTypes.bool,
+
+	onMarkerSelect 			: PropTypes.func,
+	onMarkerPress 			: PropTypes.func,
+	onRegionChange 			: PropTypes.func,
+	onUpdateCurrentLocation	: PropTypes.func,
+}
+
+DaumMapView.defaultProps = {
+	isTracking 		: false,
+	isCompass		: false,
+	isCurrentMarker : false,
 }

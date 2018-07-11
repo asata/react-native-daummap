@@ -17,20 +17,14 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
 RCT_EXPORT_VIEW_PROPERTY(mapType, NSString)
 RCT_EXPORT_VIEW_PROPERTY(markers, NSArray)
+RCT_EXPORT_VIEW_PROPERTY(isTracking, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(isHeading, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(isMapMoving, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(isCurrentMarker, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(region, NSDictionary)
 RCT_EXPORT_VIEW_PROPERTY(onMarkerSelect, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onMarkerPress, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onRegionChange, RCTDirectEventBlock)
-
-
-//RCT_EXPORT_VIEW_PROPERTY(exampleProp, NSString)
-//// Export constants
-//// https://facebook.github.io/react-native/releases/next/docs/native-modules-ios.html#exporting-constants
-//- (NSDictionary *)constantsToExport
-//{
-//  return @{
-//           @"EXAMPLE": @"example"
-//           };
-//}
+RCT_EXPORT_VIEW_PROPERTY(onUpdateCurrentLocation, RCTDirectEventBlock)
 
 @end

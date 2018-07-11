@@ -74,7 +74,7 @@ public class MainApplication extends Application implements ReactApplication {
 3. 다운로드 받은 SDK 폴더로 이동해 libv폴더 안에 있는 DaumMap.embeddedframework 폴더를 선택, 아래 "Copy items if needed"와 "Add to targets"를 선택 후 Add
 
     ![xcodeaddframework](https://user-images.githubusercontent.com/899614/40526075-fed2087c-601e-11e8-9bbd-a6df4fe207de.jpeg)
-    
+
 4. XCode에서 프로젝트 이름을 선택 후 General - Linked Frameworks and Libraries에 3번에서 추가한 DaumMap.framework를 추가
 
     <img src="https://user-images.githubusercontent.com/899614/40571726-12ff54e8-60d9-11e8-974d-34767ddb460e.gif" alt="DaumMap.framework Add" width="550px" />
@@ -115,6 +115,15 @@ public class MainApplication extends Application implements ReactApplication {
         ...
     </dict>
 ```
+7. 트래킹 모드, 나침반 모드 기능 사용시 Info.plist에 아래 내용 추가
+```
+    <dict>
+        ...
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>권한 이용 설명 기재</string>
+        ...
+    </dict>
+```
 
 #### Android
 4. 패키지명에 개발 앱 패키지명 추가
@@ -125,9 +134,11 @@ keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass 
 - Debug일 경우 Keystore 경로는 ~/.android/debug.keystore에 저장되며 비밀번호는 android
 6. 상단에 있는 "네이티브 앱 키"를 복사
 7. AndroidManifest.xml에 Permission 과 APP KEY 추가
+<!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> // 현재 위치 사용시 추가 -->
 ```
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application>
         ...
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="발급 받은 APP KEY"/>
@@ -151,15 +162,19 @@ import MapView form 'react-native-daummap';
 />
 ```
 ## Properties
-| Property      | Type   | Default  | Description |
-|---------------|--------|----------|-------------|
-| initialRegion | Object | {}       | 지도 초기 화면 좌표 및 확대/축소 레벨 |
-| mapType       | String | Standard | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
-| markers       | Object | {}       | 지도 위에 추가되는 마커 정보 |
-| region        | Object | {}       | 지도 중심점 좌표, 지도 이동시 사용 |
-| onRegionChange| Function|         | 지도 이동시 변경되는 좌표값 반환 |
-| onMarkerSelect| Function|         | 마커 핀을 선택한 경우 |
-| onMarkerPress | Function|         | 마커 위 말풍선을 선택한 경우 |
+| Property          | Type   | Default  | Description |
+|-------------------|--------|----------|-------------|
+| initialRegion     | Object | {}       | 지도 초기 화면 좌표 및 확대/축소 레벨 |
+| mapType           | String | Standard | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
+| markers           | Object | {}       | 지도 위에 추가되는 마커 정보 |
+| region            | Object | {}       | 지도 중심점 좌표, 지도 이동시 사용 |
+| isTracking        | Bool   | false    | 현위치 트래킹 모드 (지도화면 중심을 단말의 현재 위치로 이동) |
+| isCompass         | Bool   | false    | 나침반 모드 (단말의 방향에 따라 지도화면이 회전), 트래킹 모드를 활성화 시켜야 사용 가능 |
+| isCurrentMarker   | Bool   | false    | 현 위치를 표시하는 마커 표시 여부, 트래킹 모드 활성화시 true |
+| onRegionChange    | Function|         | 지도 이동시 변경되는 좌표값 반환 |
+| onMarkerSelect    | Function|         | 마커 핀을 선택한 경우 |
+| onMarkerPress     | Function|         | 마커 위 말풍선을 선택한 경우 |
+| onUpdateCurrentLocation | Function |   | 트래킹 모드 사용중, 현재 좌표가 변경된 경우 |
 
 ### initialRegion
 | Property      | Type   | Default  | Description   |

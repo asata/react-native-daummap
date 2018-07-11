@@ -24,12 +24,14 @@ import net.daum.mf.map.api.MapPOIItem;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class DaumMapManager extends SimpleViewManager<View> implements MapView.MapViewEventListener, MapView.POIItemEventListener {
+public class DaumMapManager extends SimpleViewManager<View> implements MapView.MapViewEventListener, MapView.CurrentLocationEventListener, MapView.POIItemEventListener {
 	public static final String REACT_CLASS = "DaumMap";
 	public static final String TAG = "DaumMap";
 	private final ReactApplicationContext appContext;
 	private RNMapView rnMapView;
-	private boolean initialRegionSet = false;
+	private boolean initialRegionSet 	= false;
+	private boolean isTracking 			= false;
+	private boolean isCompass 			= false;
 
 	public DaumMapManager (ReactApplicationContext context) {
 		super();
@@ -38,8 +40,6 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	@Override
 	public String getName() {
-		// Tell React the name of the module
-		// https://facebook.github.io/react-native/docs/native-components-android.html#1-create-the-viewmanager-subclass
 		return REACT_CLASS;
 	}
 
@@ -56,6 +56,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 		rMapView.setMapViewEventListener(this);
 		rMapView.setPOIItemEventListener(this);
+        rMapView.setCurrentLocationEventListener(this);
 
 		return rMapView;
 	}
@@ -135,20 +136,47 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		}
 	}
 
+	@ReactProp(name = "isCurrentMarker")
+	public void setIsCurrentMarker(MapView mMapView, boolean tCurrentMarker) {
+		mMapView.setShowCurrentLocationMarker(tCurrentMarker);
+	}
+
+	@ReactProp(name = "isTracking")
+	public void setIsTracking(MapView mMapView, boolean tTracking) {
+		isTracking = tTracking;
+		setMapTrackingMode(mMapView);		
+	}
+	@ReactProp(name = "isCompass")
+	public void setIsCompass(MapView mMapView, boolean tCompass) {
+		isCompass = tCompass;
+		setMapTrackingMode(mMapView);
+	}
+
+	private void setMapTrackingMode (MapView mMapView) {
+		Log.d(TAG, "setMapTracking");
+		MapView.CurrentLocationTrackingMode trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOff;
+		if (isTracking && isCompass) {
+			trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading;
+		} else if (isTracking && !isCompass) {
+			trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading;
+		} else {
+			trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOff;
+		}
+
+		if (mMapView != null) {
+			mMapView.setCurrentLocationTrackingMode(trackingModeValue);
+		}
+	}
+
 	@Override
 	@Nullable
 	public Map getExportedCustomDirectEventTypeConstants() {
 	Map<String, Map<String, String>> map = MapBuilder.of(
 		"onMarkerSelect", MapBuilder.of("registrationName", "onMarkerSelect"),
 		"onMarkerPress", MapBuilder.of("registrationName", "onMarkerPress"),
-		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange")
+		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange"),
+		"onUpdateCurrentLocation", MapBuilder.of("registrationName", "onUpdateCurrentLocation")
 	);
-
-	// map.putAll(MapBuilder.of(
-	// 	"onDragStart", MapBuilder.of("registrationName", "onDragStart"),
-	// 	"onDrag", MapBuilder.of("registrationName", "onDrag"),
-	// 	"onDragEnd", MapBuilder.of("registrationName", "onDragEnd")
-	// ));
 
 	return map;
 	}
@@ -174,7 +202,6 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		event.putString("action", "regionChange");
 
 		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onRegionChange", event);
-
 	}
 
 	// 지도 확대/축소 레벨이 변경된 경우
@@ -217,6 +244,40 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 		// Log.d(TAG, "onMapViewMoveFinished");
 	}
+
+	/************************************************************************/
+	// Current Location Event 
+	/************************************************************************/
+	@Override
+	public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
+		WritableMap event = new WritableNativeMap();
+
+		WritableMap coordinate = new WritableNativeMap();
+		coordinate.putDouble("latitude", currentLocation.getMapPointGeoCoord().latitude);
+		coordinate.putDouble("longitude", currentLocation.getMapPointGeoCoord().longitude);
+		event.putMap("coordinate", coordinate);
+		event.putDouble("accuracyInMeters", accuracyInMeters);
+		event.putString("action", "currentLocation");
+
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onUpdateCurrentLocation", event);
+
+	}
+
+	@Override
+	public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float headingAngle) {
+		Log.d(TAG, "onCurrentLocationDeviceHeadingUpdate");
+
+	}
+
+    @Override
+    public void onCurrentLocationUpdateFailed(MapView mapView) {
+
+    }
+
+    @Override
+    public void onCurrentLocationUpdateCancelled(MapView mapView) {
+
+    }
 
 
 	/************************************************************************/

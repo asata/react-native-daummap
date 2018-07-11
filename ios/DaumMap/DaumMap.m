@@ -20,17 +20,19 @@
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
 
-        [MTMapView setMapTilePersistentCacheEnabled:YES];
         _mapView = [[MTMapView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                self.bounds.origin.y,
                                                                self.bounds.size.width,
                                                                self.bounds.size.height)];
         _mapView.delegate = self;
         _mapView.baseMapType = MTMapTypeHybrid;
-
+        
         _latdouble = 36.143099;
         _londouble = 128.392905;
         _zoomLevel = 2;
+        
+        _isTracking = false;
+        _isCompass = false;
     }
 
     return self;
@@ -55,11 +57,11 @@
 }
 
 - (void) setMarkers:(NSArray *)markers {
-    NSArray   *markerList = [NSArray arrayWithObjects: nil];
+    NSArray *markerList = [NSArray arrayWithObjects: nil];
 
     for (int i = 0; i < [markers count]; i++) {
         NSDictionary *dict = [markers objectAtIndex:i];
-        NSString *markerTitle = [dict valueForKey:@"title"];
+        NSString *itemName = [dict valueForKey:@"name"];
         NSString *pinColor = [dict valueForKey:@"pinColor"];
         NSString *selectPinColor = [dict valueForKey:@"selectPinColor"];
         MTMapPOIItemMarkerType markerColor = MTMapPOIItemMarkerTypeBluePin;
@@ -83,7 +85,7 @@
         }
 
         MTMapPOIItem* markerItem = [MTMapPOIItem poiItem];
-        if (markerTitle != NULL) markerItem.itemName = markerTitle;
+        if (itemName != NULL) markerItem.itemName = itemName;
         float latdouble = [[dict valueForKey:@"latitude"] floatValue];
         float londouble = [[dict valueForKey:@"longitude"] floatValue];
 
@@ -118,18 +120,67 @@
     if ([region valueForKey:@"latitude"] != [NSNull null] && [region valueForKey:@"longitude"] != [NSNull null]) {
         float latdouble = [[region valueForKey:@"latitude"] floatValue];
         float londouble = [[region valueForKey:@"longitude"] floatValue];
-
+        
         [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)] animated:YES];
     }
+}
+
+- (MTMapCurrentLocationTrackingMode) getTrackingMode {
+//    MTMapCurrentLocationTrackingOff : 현위치 트랙킹 모드 및 나침반 모드 Off
+//    MTMapCurrentLocationTrackingOnWithoutHeading : 현위치 트랙킹 모드 On, 단말의 위치에 따라 지도 중심이 이동한다. 나침반 모드는 꺼진 상태
+//    MTMapCurrentLocationTrackingOnWithHeading : 현위치 트랙킹 모드 On + 나침반 모드 On, 단말의 위치에 따라 지도 중심이 이동하며 단말의 방향에 따라 지도가 회전한다.(나침반 모드 On)
+//    MTMapCurrentLocationTrackingOnWithoutHeadingWithoutMapMoving : 현위치 트랙킹 모드 On + 나침반 모드 Off + 지도이동 Off, 지도중심이동을 하지 않는다. 나침반 모드는 꺼진 상태
+//    MTMapCurrentLocationTrackingOnWithHeadingWithoutMapMoving : 현위치 트랙킹 모드 On + 나침반 모드 On + 지도이동 Offm 지도중심이동을 하지 않는다. (나침반 모드 On)
+    return [_mapView currentLocationTrackingMode];
+}
+
+- (void) setIsCurrentMarker: (BOOL)isCurrentMarker {
+    [_mapView setShowCurrentLocationMarker:isCurrentMarker];
+}
+
+- (void) setIsTracking:(BOOL)isTracking {
+    _isTracking = isTracking;
+    
+    [self setMapTracking];
+}
+
+- (void) setIsCompass:(BOOL)isCompass {
+    _isCompass = isCompass;
+    
+    [self setMapTracking];
+}
+
+- (void) setMapTracking {    
+    MTMapCurrentLocationTrackingMode trackingModeValue = MTMapCurrentLocationTrackingOff;
+    if (_isTracking && _isCompass) {
+        trackingModeValue = MTMapCurrentLocationTrackingOnWithHeading;
+    } else if (_isTracking && !_isCompass) {
+        trackingModeValue = MTMapCurrentLocationTrackingOnWithoutHeading;
+    } else {
+        trackingModeValue = MTMapCurrentLocationTrackingOff;
+    }
+    
+    [_mapView setCurrentLocationTrackingMode:trackingModeValue];
 }
 
 /****************************************************************/
 // 이벤트 처리 시작
 /****************************************************************/
-- (void)mapView:(MTMapView*)mapView openAPIKeyAuthenticationResultCode:(int)resultCode resultMessage:(NSString*)resultMessage {
-//    NSLog(@"openAPIKeyAuthenticationResultCode : %d %@", resultCode, resultMessage);
-
+- (void)mapView:(MTMapView*)mapView openAPIKeyAuthenticationResultCode:(int)resultCode resultMessage:(NSString*)resultMessage {    
     [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_latdouble, _londouble)] zoomLevel:_zoomLevel animated:YES];
+}
+
+- (void)mapView:(MTMapView*)mapView updateCurrentLocation:(MTMapPoint*)location withAccuracy:(MTMapLocationAccuracy)accuracy {
+    id event = @{
+                 @"action": @"updateCurrentLocation",
+                 // @"accuracy": @(accuracy),
+                 @"coordinate": @{
+                         @"latitude": @([location mapPointGeo].latitude),
+                         @"longitude": @([location mapPointGeo].longitude)
+                         }
+                 };
+    
+    if (self.onUpdateCurrentLocation) self.onUpdateCurrentLocation(event);
 }
 
 - (BOOL)mapView:(MTMapView*)mapView selectedPOIItem:(MTMapPOIItem*)poiItem {
@@ -142,7 +193,7 @@
                 }
             };
     if (self.onMarkerSelect) self.onMarkerSelect(event);
-
+    
     return YES;
 }
 
