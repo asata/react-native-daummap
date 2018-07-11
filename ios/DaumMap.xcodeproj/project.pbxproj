@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB0B0C5920F61A0000FFAD5C /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */; };
 		CB51EB0A20B50D0900CEC4FC /* DaumMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */; };
 		CB51EB0B20B50D0900CEC4FC /* DaumMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0920B50D0900CEC4FC /* DaumMap.m */; };
 /* End PBXBuildFile section */
@@ -25,7 +24,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		CB51EB0620B50D0800CEC4FC /* DaumMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMapManager.h; sourceTree = "<group>"; };
 		CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMapManager.m; sourceTree = "<group>"; };
 		CB51EB0820B50D0800CEC4FC /* DaumMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMap.h; sourceTree = "<group>"; };
@@ -38,25 +36,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB0B0C5920F61A0000FFAD5C /* DaumMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB0B0C5720F619D700FFAD5C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CB0B0C5820F61A0000FFAD5C /* DaumMap.framework */,
-			);
-			path = Frameworks;
-			sourceTree = "<group>";
-		};
 		CBFBFCD220B50B8500C0C250 = {
 			isa = PBXGroup;
 			children = (
-				CB0B0C5720F619D700FFAD5C /* Frameworks */,
 				CBFBFCDD20B50B8500C0C250 /* DaumMap */,
 				CBFBFCDC20B50B8500C0C250 /* Products */,
 			);
@@ -260,10 +248,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DaumMap.embeddedframework",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/../../../ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -277,10 +265,10 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_STYLE = Automatic;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/DaumMap.embeddedframework",
-					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)/../../../ios",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

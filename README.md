@@ -70,30 +70,14 @@ public class MainApplication extends Application implements ReactApplication {
 ## 3. 다음 지도 SDK 추가
 ##### iOS
 1. [다음 지도 SDK 다운로드](http://apis.map.daum.net/ios/guide/)
-2. XCode Project navigator에서 프로젝트 이름을 오른쪽 버튼으로 클릭 후 "Add Files to [your project's name]" 선택
-3. 다운로드 받은 SDK 폴더로 이동해 libv폴더 안에 있는 DaumMap.embeddedframework 폴더를 선택, 아래 "Copy items if needed"와 "Add to targets"를 선택 후 Add
+2. XCode Project navigator에서 Frameworks 폴더를 마우스 오른쪽 버튼으로 클릭 후 "Add Files to [your project's name]" 선택
+3. 다운로드 받은 SDK 폴더로 이동해 libs폴더 안에 있는 DaumMap.embeddedframework 폴더에서 DaumMap.framework 파일 선택, 아래 "Copy items if needed"와 "Add to targets"를 선택 후 Add
 
-    ![xcodeaddframework](https://user-images.githubusercontent.com/899614/40526075-fed2087c-601e-11e8-9bbd-a6df4fe207de.jpeg)
+    ![xcodeaddframework](https://user-images.githubusercontent.com/899614/42580691-0edaabae-8566-11e8-9af4-0709ddbe9e97.png)
 
 4. XCode에서 프로젝트 이름을 선택 후 General - Linked Frameworks and Libraries에 3번에서 추가한 DaumMap.framework를 추가
 
-    <img src="https://user-images.githubusercontent.com/899614/40571726-12ff54e8-60d9-11e8-974d-34767ddb460e.gif" alt="DaumMap.framework Add" width="550px" />
-<!--
-해당 기능 동작 추가 확인 필요
-- Build Setting 추가
-    - Other Linker Flags
-        ```
-        -force_load $(PROJECT_DIR)/../node_modules/react-native-daummap/ios/DaumMap.embeddedframework/DaumMap.framework/DaumMap
-        ```
-    - Header Search Paths
-        ```
-        $(PROJECT_DIR)/../node_modules/react-native-daummap/ios
-        ```
-    - Framework Search Paths
-        ```
-        $(PROJECT_DIR)/../node_modules/react-native-daummap/ios/DaumMap.embeddedframework/
-        ```
--->
+    <img src="https://user-images.githubusercontent.com/899614/42581577-0a964d30-8568-11e8-968f-8d37843b7d72.gif" alt="DaumMap.framework Add" width="451px" />
 
 #### Android
 - 별도 작업 없음
