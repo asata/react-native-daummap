@@ -1,13 +1,13 @@
 {
 	"name": "react-native-daummap",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "react-native use daum map",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
-	"type": "git",
+		"type": "git",
 		"url": "git+https://github.com/asata/react-native-daummap.git"
 	},
 	"keywords": [
