@@ -149,7 +149,7 @@ keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass 
 
 # Usage
 ```
-import MapView form 'react-native-daummap';
+import MapView from 'react-native-daummap';
 
 <MapView
     initialRegion={{
