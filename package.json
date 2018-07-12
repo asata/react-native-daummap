@@ -1,6 +1,6 @@
 {
 	"name": "react-native-daummap",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"description": "react-native use daum map",
 	"main": "index.js",
 	"scripts": {
