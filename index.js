@@ -1,6 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { requireNativeComponent } from 'react-native';
+import {
+	requireNativeComponent,
+	Platform,
+	PermissionsAndroid,
+	View,
+} from 'react-native';
 
 const DaumMap = requireNativeComponent('DaumMap', DaumMapView, {
 	nativeOnly: {
@@ -15,21 +20,55 @@ export default class DaumMapView extends Component {
 		super(props);
 
 		this.state = {
+			permissionGranted: false,
 
 		};
 	}
 
+	async componentDidMount () {
+		if (Platform.OS === "android") {
+			try {
+				const granted = await PermissionsAndroid.request(
+					PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+					{
+						'title'		: this.props.permissionsAndroidTitle,
+						'message'	: this.props.permissionsAndroidMessage
+					}
+				)
+				if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+					this.setState({ permissionGranted: true, });
+				} else {
+					this.setState({ permissionGranted: false, });
+				}
+			} catch (err) {
+				console.warn(err)
+			}
+		} else {
+			this.setState({ permissionGranted: true, });
+		}
+	}
+
 	render () {
-		return <DaumMap
-			ref={ref => { this.map = ref; }}
-			isTracking={this.props.isTracking}
-			isCompass={this.props.isCompass}
-			isCurrentMarker={this.props.isCurrentMarker}
-			onMarkerSelect={this._onMarkerSelect}
-			onMarkerPress={this._onMarkerPress}
-			onRegionChange={this._onRegionChange}
-			onUpdateCurrentLocation={this._onUpdateCurrentLocation}
-			{...this.props} />
+		if (this.state.permissionGranted) {
+			return (
+				<DaumMap
+					ref={ref => { this.map = ref; }}
+					isTracking={this.props.isTracking}
+					isCompass={this.props.isCompass}
+					isCurrentMarker={this.props.isCurrentMarker}
+					onMarkerSelect={this._onMarkerSelect}
+					onMarkerPress={this._onMarkerPress}
+					onRegionChange={this._onRegionChange}
+					onUpdateCurrentLocation={this._onUpdateCurrentLocation}
+					{...this.props} />
+			);
+		} else {
+			return (
+				<View style={{ flex: 1, }}>
+					{this.props.permissionDeniedView}
+				</View>
+			);
+		}
 	}
 
 	_onMarkerSelect = (event) => {
@@ -71,7 +110,10 @@ DaumMapView.propTypes = {
 }
 
 DaumMapView.defaultProps = {
-	isTracking 		: false,
-	isCompass		: false,
-	isCurrentMarker : false,
+	isTracking 				: false,
+	isCompass				: false,
+	isCurrentMarker 		: false,
+	permissionDeniedView 	: null,
+	permissionsAndroidTitle : "권한 요청",
+	permissionsAndroidMessage: "지도 표시를 위해 권한을 허용 해 주세요.",
 }

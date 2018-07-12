@@ -146,40 +146,43 @@ import MapView from 'react-native-daummap';
 />
 ```
 ## Properties
-| Property          | Type   | Default  | Description |
-|-------------------|--------|----------|-------------|
-| initialRegion     | Object | {}       | 지도 초기 화면 좌표 및 확대/축소 레벨 |
-| mapType           | String | Standard | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
-| markers           | Object | {}       | 지도 위에 추가되는 마커 정보 |
-| region            | Object | {}       | 지도 중심점 좌표, 지도 이동시 사용 |
-| isTracking        | Bool   | false    | 현위치 트래킹 모드 (지도화면 중심을 단말의 현재 위치로 이동) |
-| isCompass         | Bool   | false    | 나침반 모드 (단말의 방향에 따라 지도화면이 회전), 트래킹 모드를 활성화 시켜야 사용 가능 |
-| isCurrentMarker   | Bool   | false    | 현 위치를 표시하는 마커 표시 여부, 트래킹 모드 활성화시 true |
-| onRegionChange    | Function|         | 지도 이동시 변경되는 좌표값 반환 |
-| onMarkerSelect    | Function|         | 마커 핀을 선택한 경우 |
-| onMarkerPress     | Function|         | 마커 위 말풍선을 선택한 경우 |
-| onUpdateCurrentLocation | Function |   | 트래킹 모드 사용중, 현재 좌표가 변경된 경우 |
+| Property                  | Type      | Default   | Description |
+|---------------------------|-----------|-----------|-------------|
+| initialRegion             | Object    | {}        | 지도 초기 화면 좌표 및 확대/축소 레벨 |
+| mapType                   | String    | Standard  | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
+| markers                   | Object    | {}        | 지도 위에 추가되는 마커 정보 |
+| region                    | Object    | {}        | 지도 중심점 좌표, 지도 이동시 사용 |
+| isTracking                | Bool      | false     | 현위치 트래킹 모드 (지도화면 중심을 단말의 현재 위치로 이동) |
+| isCompass                 | Bool      | false     | 나침반 모드 (단말의 방향에 따라 지도화면이 회전), 트래킹 모드를 활성화 시켜야 사용 가능 |
+| isCurrentMarker           | Bool      | false     | 현 위치를 표시하는 마커 표시 여부, 트래킹 모드 활성화시 true |
+| permissionDeniedView      | Component | null      | (Android) 위치 권한이 없을 경우 표시될 View  |
+| permissionsAndroidTitle   | String    |           | (Android) 위치 권한 요청시 Alert창 제목 |
+| permissionsAndroidMessage | String    |           | (Android) 위치 권한 요청시 Alert창 본문 |
+| onRegionChange            | Function  |           | 지도 이동시 변경되는 좌표값 반환 |
+| onMarkerSelect            | Function  |           | 마커 핀을 선택한 경우 |
+| onMarkerPress             | Function  |           | 마커 위 말풍선을 선택한 경우 |
+| onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중, 현재 좌표가 변경된 경우 |
 
 ### initialRegion
-| Property      | Type   | Default  | Description   |
-|---------------|--------|----------|---------------|
-| latitude      | Number | 36.143099| 위도 좌표값      |
-| longitude     | Number | 128.392905| 경도 좌표값     |
-| zoomLevel     | Number | 2        | 확대/축소 레벨 (-2~12, 값이 클수록 더 넓은 영역이 보임)|
+| Property      | Type   | Default      | Description   |
+|---------------|--------|--------------|---------------|   
+| latitude      | Number | 36.143099    | 위도 좌표값      |
+| longitude     | Number | 128.392905   | 경도 좌표값      |
+| zoomLevel     | Number | 2            | 확대/축소 레벨 (-2~12, 값이 클수록 더 넓은 영역이 보임) |
 
 ### markers
-| Property      | Type   | Default  | Description   |
-|---------------|--------|----------|---------------|
-| latitude      | Number | 36.143099| 위도 좌표값      |
-| longitude     | Number | 128.392905| 경도 좌표값     |
-| title         | String |          | 마커 이름, 마커 선택시 표시 |
-| pinColor      | String | blue     | 마커 핀 색상     |
-| selectPinColor| String | red      | 선택된 마커 핀 색상 |
+| Property      | Type   | Default      | Description   |
+|---------------|--------|--------------|---------------|
+| latitude      | Number | 36.143099    | 위도 좌표값      |
+| longitude     | Number | 128.392905   | 경도 좌표값      |
+| title         | String |              | 마커 이름, 마커 선택시 표시 |
+| pinColor      | String | blue         | 마커 핀 색상 (blue, yellow, red) |
+| selectPinColor| String | red          | 선택된 마커 핀 색상 (blue, yellow, red) |
 
 ### region
-| Property      | Type   | Default  | Description   |
-|---------------|--------|----------|---------------|
-| latitude      | Number |          | 위도 좌표값      |
-| longitude     | Number |          | 경도 좌표값      |
+| Property      | Type   | Default      | Description   |
+|---------------|--------|--------------|---------------|
+| latitude      | Number |              | 위도 좌표값      |
+| longitude     | Number |              | 경도 좌표값      |
 
 ***
