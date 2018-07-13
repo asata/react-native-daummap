@@ -56,7 +56,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 		rMapView.setMapViewEventListener(this);
 		rMapView.setPOIItemEventListener(this);
-        rMapView.setCurrentLocationEventListener(this);
+		rMapView.setCurrentLocationEventListener(this);
 
 		return rMapView;
 	}
@@ -94,6 +94,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 			double longitude 	= markerInfo.hasKey("longitude") ? markerInfo.getDouble("longitude") : 128.392905;
 
 			MapPOIItem.MarkerType markerType = MapPOIItem.MarkerType.BluePin;
+
 			if (markerInfo.hasKey("pinColor")) {
 				String pinColor = markerInfo.getString("pinColor");
 				if (pinColor.equals("red")) {
@@ -102,18 +103,22 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 					markerType = MapPOIItem.MarkerType.YellowPin;
 				} else if (pinColor.equals("blue")) {
 					markerType = MapPOIItem.MarkerType.BluePin;
+				} else if (pinColor.equals("image")) {
+					markerType = MapPOIItem.MarkerType.CustomImage;
 				}
 			}
 
 			MapPOIItem.MarkerType sMarkerType = MapPOIItem.MarkerType.RedPin;
-			if (markerInfo.hasKey("selectPinColor")) {
-				String pinColor = markerInfo.getString("selectPinColor");
+			if (markerInfo.hasKey("pinColorSelect")) {
+				String pinColor = markerInfo.getString("pinColorSelect");
 				if (pinColor.equals("red")) {
 					sMarkerType = MapPOIItem.MarkerType.RedPin;
 				} else if (pinColor.equals("yellow")) {
 					sMarkerType = MapPOIItem.MarkerType.YellowPin;
 				} else if (pinColor.equals("blue")) {
 					sMarkerType = MapPOIItem.MarkerType.BluePin;
+				} else if (pinColor.equals("image")) {
+					sMarkerType = MapPOIItem.MarkerType.CustomImage;
 				} else if (pinColor.equals("none")) {
 					sMarkerType = null;
 				}
@@ -127,7 +132,17 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 			marker.setTag(i);
 			marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
 			marker.setMarkerType(markerType); 											// 기본으로 제공하는 BluePin 마커 모양.
+			if (markerType == MapPOIItem.MarkerType.CustomImage) {
+				String markerImage = markerInfo.getString("markerImage");
+				int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
+				marker.setCustomImageResourceId(resID);
+			}
 			marker.setSelectedMarkerType(sMarkerType); 									// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+			if (sMarkerType == MapPOIItem.MarkerType.CustomImage) {
+				String markerImage = markerInfo.getString("markerImageSelect");
+				int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
+				marker.setCustomImageResourceId(resID);
+			}
 			marker.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround); // 마커 추가시 효과
 			marker.setShowDisclosureButtonOnCalloutBalloon(false);						// 마커 클릭시, 말풍선 오른쪽에 나타나는 > 표시 여부
 			marker.setDraggable(false);
@@ -144,7 +159,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	@ReactProp(name = "isTracking")
 	public void setIsTracking(MapView mMapView, boolean tTracking) {
 		isTracking = tTracking;
-		setMapTrackingMode(mMapView);		
+		setMapTrackingMode(mMapView);
 	}
 	@ReactProp(name = "isCompass")
 	public void setIsCompass(MapView mMapView, boolean tCompass) {
@@ -153,9 +168,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	}
 
 	private void setMapTrackingMode (MapView mMapView) {
-		// 트래킹 X, 나침반 X : TrackingModeOff
-		// 트래킹 O, 나침반 O : TrackingModeOnWithHeading
-		// 트래킹 O, 나침반 X : TrackingModeOnWithoutHeading
+		Log.d(TAG, "setMapTracking");
 		MapView.CurrentLocationTrackingMode trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOff;
 		if (isTracking && isCompass) {
 			trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading;
@@ -242,7 +255,6 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	}
 
-	// 지도의 이동이 완료된 경우
 	@Override
 	public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 		// Log.d(TAG, "onMapViewMoveFinished");
@@ -251,7 +263,6 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	/************************************************************************/
 	// Current Location Event 
 	/************************************************************************/
-	// 단말의 현위치 좌표값
 	@Override
 	public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
 		WritableMap event = new WritableNativeMap();
@@ -264,22 +275,20 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		event.putString("action", "currentLocation");
 
 		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onUpdateCurrentLocation", event);
+
 	}
 
-	// 단말의 방향(Heading) 각도값
 	@Override
 	public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float headingAngle) {
 		Log.d(TAG, "onCurrentLocationDeviceHeadingUpdate");
 
 	}
 
-	// 현위치 갱신 작업에 실패한 경우 
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
 
     }
 
-    // 현위치 트랙킹 기능이 사용자에 의해 취소된 경우
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
 

@@ -164,25 +164,30 @@ import MapView from 'react-native-daummap';
 | onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중, 현재 좌표가 변경된 경우 |
 
 ### initialRegion
-| Property      | Type   | Default      | Description   |
-|---------------|--------|--------------|---------------|   
-| latitude      | Number | 36.143099    | 위도 좌표값      |
-| longitude     | Number | 128.392905   | 경도 좌표값      |
-| zoomLevel     | Number | 2            | 확대/축소 레벨 (-2~12, 값이 클수록 더 넓은 영역이 보임) |
+| Property          | Type   | Default      | Description   |
+|-------------------|--------|--------------|---------------|   
+| latitude          | Number | 36.143099    | 위도 좌표값      |
+| longitude         | Number | 128.392905   | 경도 좌표값      |
+| zoomLevel         | Number | 2            | 확대/축소 레벨 (-2~12, 값이 클수록 더 넓은 영역이 보임) |
 
 ### markers
-| Property      | Type   | Default      | Description   |
-|---------------|--------|--------------|---------------|
-| latitude      | Number | 36.143099    | 위도 좌표값      |
-| longitude     | Number | 128.392905   | 경도 좌표값      |
-| title         | String |              | 마커 이름, 마커 선택시 표시 |
-| pinColor      | String | blue         | 마커 핀 색상 (blue, yellow, red) |
-| selectPinColor| String | red          | 선택된 마커 핀 색상 (blue, yellow, red) |
+| Property          | Type   | Default      | Description   |
+|-------------------|--------|--------------|---------------|
+| latitude          | Number | 36.143099    | 위도 좌표값      |
+| longitude         | Number | 128.392905   | 경도 좌표값      |
+| title             | String |              | 마커 이름, 마커 선택시 표시 |
+| pinColor          | String | blue         | 마커 핀 색상 (blue, yellow, red, image) |
+| markerImage       | String |              | 마커 사용자 이미지 |
+| pinColorSelect    | String | red          | 선택된 마커 핀 색상 (blue, yellow, red, image) |
+| markerImageSelect | String |              | 선택된 마커 사용자 이미지 |
+* 사용자 이미지는 추가 위치
+    - Android : android/app/src/main/res/drawable
+    - iOS : Xcode Project에 추가
 
 ### region
-| Property      | Type   | Default      | Description   |
-|---------------|--------|--------------|---------------|
-| latitude      | Number |              | 위도 좌표값      |
-| longitude     | Number |              | 경도 좌표값      |
+| Property          | Type   | Default      | Description   |
+|-------------------|--------|--------------|---------------|
+| latitude          | Number |              | 위도 좌표값      |
+| longitude         | Number |              | 경도 좌표값      |
 
 ***
