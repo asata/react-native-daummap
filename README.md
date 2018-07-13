@@ -1,6 +1,9 @@
 # react-native-daummap
 
- <!-- [![npm](https://img.shields.io/npm/v/npm.svg)](react-native-daummap) [![Github All Releases](https://img.shields.io/github/downloads/atom/atom/total.svg)](react-native-daummap) [![npm](https://img.shields.io/npm/l/express.svg)](react-native-daummap) -->
+---
+* react-native 다음 지도
+
+[![NPM](https://nodei.co/npm/react-native-daummap.png)](https://nodei.co/npm/react-native-daummap/)
 
 # Content
 - [Installation](#installation)
@@ -163,7 +166,8 @@ import MapView from 'react-native-daummap';
 | onMarkerSelect            | Function  |           | 마커 핀을 선택한 경우 |
 | onMarkerPress             | Function  |           | 마커 위 말풍선을 선택한 경우 |
 | onMarkerMoved             | Function  |           | 마커를 이동시킨 경우 |
-| onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중 일 때 좌표가 변경된 경우 |
+| onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중 좌표가 변경된 경우 |
+| onUpdateCurrentHeading    | Function  |           | 나침반 모드 사용시 방향 각도 값이 변경된 경우 |
 
 ### initialRegion
 | Property          | Type   | Default      | Description   |

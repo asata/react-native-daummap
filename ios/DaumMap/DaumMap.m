@@ -62,8 +62,8 @@
     for (int i = 0; i < [markers count]; i++) {
         NSDictionary *dict = [markers objectAtIndex:i];
         NSString *itemName = [dict valueForKey:@"title"];
-        NSString *pinColor = [dict valueForKey:@"pinColor"];
-        NSString *selectPinColor = [dict valueForKey:@"pinColorSelect"];
+        NSString *pinColor = [[dict valueForKey:@"pinColor"] lowercaseString];
+        NSString *selectPinColor = [[dict valueForKey:@"pinColorSelect"] lowercaseString];
         MTMapPOIItemMarkerType markerType = MTMapPOIItemMarkerTypeBluePin;
         if ([pinColor isEqualToString:@"red"]) {
             markerType = MTMapPOIItemMarkerTypeRedPin;
@@ -115,11 +115,12 @@
 }
 
 - (void) setMapType:(NSString *)mapType {
-    if ([mapType isEqualToString:@"Standard"]) {
+    mapType = [mapType lowercaseString];
+    if ([mapType isEqualToString:@"standard"]) {
         _mapView.baseMapType = MTMapTypeStandard;
-    } else if ([mapType isEqualToString:@"Satellite"]) {
+    } else if ([mapType isEqualToString:@"satellite"]) {
         _mapView.baseMapType = MTMapTypeSatellite;
-    } else if ([mapType isEqualToString:@"Hybrid"]) {
+    } else if ([mapType isEqualToString:@"hybrid"]) {
         _mapView.baseMapType = MTMapTypeHybrid;
     } else {
         _mapView.baseMapType = MTMapTypeStandard;

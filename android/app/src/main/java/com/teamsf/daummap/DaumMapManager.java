@@ -75,11 +75,12 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	@ReactProp(name = "mapType")
 	public void setMapType(MapView mMapView, String mapType) {
-		if (mapType.equals("Standard")) {
+		mapType = mapType.toLowerCase();
+		if (mapType.equals("standard")) {
 			mMapView.setMapType(MapView.MapType.Standard);
-		} else if (mapType.equals("Satellite")) {
+		} else if (mapType.equals("satellite")) {
 			mMapView.setMapType(MapView.MapType.Satellite);
-		} else if (mapType.equals("Hybrid")) {
+		} else if (mapType.equals("hybrid")) {
 			mMapView.setMapType(MapView.MapType.Hybrid);
 		} else {
 			mMapView.setMapType(MapView.MapType.Standard);
@@ -96,28 +97,28 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 			MapPOIItem.MarkerType markerType = MapPOIItem.MarkerType.BluePin;
 
 			if (markerInfo.hasKey("pinColor")) {
-				String pinColor = markerInfo.getString("pinColor");
+				String pinColor = markerInfo.getString("pinColor").toLowerCase();
 				if (pinColor.equals("red")) {
 					markerType = MapPOIItem.MarkerType.RedPin;
 				} else if (pinColor.equals("yellow")) {
 					markerType = MapPOIItem.MarkerType.YellowPin;
 				} else if (pinColor.equals("blue")) {
 					markerType = MapPOIItem.MarkerType.BluePin;
-				} else if (pinColor.equals("image")) {
+				} else if (pinColor.equals("image") || pinColor.equals("custom")) {
 					markerType = MapPOIItem.MarkerType.CustomImage;
 				}
 			}
 
 			MapPOIItem.MarkerType sMarkerType = MapPOIItem.MarkerType.RedPin;
 			if (markerInfo.hasKey("pinColorSelect")) {
-				String pinColor = markerInfo.getString("pinColorSelect");
+				String pinColor = markerInfo.getString("pinColorSelect").toLowerCase();
 				if (pinColor.equals("red")) {
 					sMarkerType = MapPOIItem.MarkerType.RedPin;
 				} else if (pinColor.equals("yellow")) {
 					sMarkerType = MapPOIItem.MarkerType.YellowPin;
 				} else if (pinColor.equals("blue")) {
 					sMarkerType = MapPOIItem.MarkerType.BluePin;
-				} else if (pinColor.equals("image")) {
+				} else if (pinColor.equals("image") || pinColor.equals("custom")) {
 					sMarkerType = MapPOIItem.MarkerType.CustomImage;
 				} else if (pinColor.equals("none")) {
 					sMarkerType = null;
@@ -307,15 +308,15 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onUpdateCurrentHeading", event);
 	}
 
-    @Override
-    public void onCurrentLocationUpdateFailed(MapView mapView) {
+	@Override
+	public void onCurrentLocationUpdateFailed(MapView mapView) {
 
-    }
+	}
 
-    @Override
-    public void onCurrentLocationUpdateCancelled(MapView mapView) {
+	@Override
+	public void onCurrentLocationUpdateCancelled(MapView mapView) {
 
-    }
+	}
 
 
 	/************************************************************************/
