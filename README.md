@@ -149,6 +149,7 @@ import MapView from 'react-native-daummap';
 | Property                  | Type      | Default   | Description |
 |---------------------------|-----------|-----------|-------------|
 | initialRegion             | Object    | {}        | 지도 초기 화면 좌표 및 확대/축소 레벨 |
+| style                     |           | {}        | 지도 View Style |
 | mapType                   | String    | Standard  | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
 | markers                   | Object    | {}        | 지도 위에 추가되는 마커 정보 |
 | region                    | Object    | {}        | 지도 중심점 좌표, 지도 이동시 사용 |

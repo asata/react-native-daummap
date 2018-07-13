@@ -53,6 +53,7 @@ export default class DaumMapView extends Component {
 			return (
 				<DaumMap
 					{...this.props} 
+					style={[{ width: "100%", height: "100%", }, this.props.style]}
 					ref={ref => { this.map = ref; }}
 					onMarkerSelect={this._onMarkerSelect}
 					onMarkerPress={this._onMarkerPress}
@@ -112,6 +113,7 @@ DaumMapView.propTypes = {
 }
 
 DaumMapView.defaultProps = {
+	style					: {},
 	isTracking 				: false,
 	isCompass				: false,
 	isCurrentMarker 		: true,
