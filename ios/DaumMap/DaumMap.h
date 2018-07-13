@@ -23,6 +23,7 @@
     @property (nonatomic, assign) NSMutableDictionary *initialRegion;
     @property (nonatomic, copy) RCTDirectEventBlock onMarkerSelect;
     @property (nonatomic, copy) RCTDirectEventBlock onMarkerPress;
+    @property (nonatomic, copy) RCTDirectEventBlock onMarkerMoved;
     @property (nonatomic, copy) RCTDirectEventBlock onRegionChange;
     @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentLocation;
 

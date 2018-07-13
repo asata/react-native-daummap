@@ -56,7 +56,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 		rMapView.setMapViewEventListener(this);
 		rMapView.setPOIItemEventListener(this);
-		rMapView.setCurrentLocationEventListener(this);
+        rMapView.setCurrentLocationEventListener(this);
 
 		return rMapView;
 	}
@@ -130,22 +130,38 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 			}
 
 			marker.setTag(i);
+
+			// 마커 좌표
 			marker.setMapPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
-			marker.setMarkerType(markerType); 											// 기본으로 제공하는 BluePin 마커 모양.
+
+			// 기본 마커 모양 
+			marker.setMarkerType(markerType);
 			if (markerType == MapPOIItem.MarkerType.CustomImage) {
-				String markerImage = markerInfo.getString("markerImage");
-				int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
-				marker.setCustomImageResourceId(resID);
+				if (markerInfo.hasKey("markerImage")) {
+					String markerImage = markerInfo.getString("markerImage");
+					int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
+					marker.setCustomImageResourceId(resID);
+				}
 			}
-			marker.setSelectedMarkerType(sMarkerType); 									// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+			// 마커를 선택한 경우
+			marker.setSelectedMarkerType(sMarkerType);
 			if (sMarkerType == MapPOIItem.MarkerType.CustomImage) {
-				String markerImage = markerInfo.getString("markerImageSelect");
-				int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
-				marker.setCustomImageResourceId(resID);
+				if (markerInfo.hasKey("markerImageSelect")) {
+					String markerImage = markerInfo.getString("markerImageSelect");
+					int resID = appContext.getResources().getIdentifier(markerImage, "drawable", appContext.getApplicationContext().getPackageName());
+					marker.setCustomImageResourceId(resID);
+				}
 			}
 			marker.setShowAnimationType(MapPOIItem.ShowAnimationType.SpringFromGround); // 마커 추가시 효과
 			marker.setShowDisclosureButtonOnCalloutBalloon(false);						// 마커 클릭시, 말풍선 오른쪽에 나타나는 > 표시 여부
-			marker.setDraggable(false);
+
+			// 마커 드래그 가능 여부
+			boolean draggable = false;
+			if (markerInfo.hasKey("draggable")) {
+				draggable = markerInfo.getBoolean("draggable");
+			}
+			marker.setDraggable(draggable);
 
 			mMapView.addPOIItem(marker);
 		}
@@ -159,7 +175,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	@ReactProp(name = "isTracking")
 	public void setIsTracking(MapView mMapView, boolean tTracking) {
 		isTracking = tTracking;
-		setMapTrackingMode(mMapView);
+		setMapTrackingMode(mMapView);		
 	}
 	@ReactProp(name = "isCompass")
 	public void setIsCompass(MapView mMapView, boolean tCompass) {
@@ -189,6 +205,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	Map<String, Map<String, String>> map = MapBuilder.of(
 		"onMarkerSelect", MapBuilder.of("registrationName", "onMarkerSelect"),
 		"onMarkerPress", MapBuilder.of("registrationName", "onMarkerPress"),
+		"onMarkerMoved", MapBuilder.of("registrationName", "onMarkerMoved"),
 		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange"),
 		"onUpdateCurrentLocation", MapBuilder.of("registrationName", "onUpdateCurrentLocation")
 	);
@@ -345,6 +362,16 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	// Marker 위치를 이동한 경우
 	@Override
 	public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem poiItem, MapPoint newMapPoint) {
+		WritableMap event = new WritableNativeMap();
+
+		WritableMap coordinate = new WritableNativeMap();
+		coordinate.putDouble("latitude", newMapPoint.getMapPointGeoCoord().latitude);
+		coordinate.putDouble("longitude", newMapPoint.getMapPointGeoCoord().longitude);
+		event.putMap("coordinate", coordinate);
+		event.putString("action", "markerMoved");
+		event.putInt("id", poiItem.getTag());
+
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onMarkerMoved", event);
 
 	}
 }

@@ -31,8 +31,8 @@ export default class DaumMapView extends Component {
 				const granted = await PermissionsAndroid.request(
 					PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
 					{
-						'title'		: this.props.permissionsAndroidTitle,
-						'message'	: this.props.permissionsAndroidMessage
+						'title'		: this.props.PermissionsAndroidTitle,
+						'message'	: this.props.PermissionsAndroidMessage
 					}
 				)
 				if (granted === PermissionsAndroid.RESULTS.GRANTED) {
@@ -52,15 +52,13 @@ export default class DaumMapView extends Component {
 		if (this.state.permissionGranted) {
 			return (
 				<DaumMap
+					{...this.props} 
 					ref={ref => { this.map = ref; }}
-					isTracking={this.props.isTracking}
-					isCompass={this.props.isCompass}
-					isCurrentMarker={this.props.isCurrentMarker}
 					onMarkerSelect={this._onMarkerSelect}
 					onMarkerPress={this._onMarkerPress}
+					onMarkerMoved={this._onMarkerMoved}
 					onRegionChange={this._onRegionChange}
-					onUpdateCurrentLocation={this._onUpdateCurrentLocation}
-					{...this.props} />
+					onUpdateCurrentLocation={this._onUpdateCurrentLocation}/>
 			);
 		} else {
 			return (
@@ -83,6 +81,12 @@ export default class DaumMapView extends Component {
 		}
 	}
 
+	_onMarkerMoved = (event) => {
+		if (this.props.onMarkerMoved != undefined) {
+			this.props.onMarkerMoved(event.nativeEvent);
+		}		
+	}
+
 	_onRegionChange = (event) => {
 		if (this.props.onRegionChange != undefined) {
 			this.props.onRegionChange(event.nativeEvent);
@@ -93,8 +97,6 @@ export default class DaumMapView extends Component {
 		if (this.props.onUpdateCurrentLocation != undefined) {
 			this.props.onUpdateCurrentLocation(event.nativeEvent);
 		}
-
-		console.log("onUpdateCurrentLocation", event.nativeEvent);
 	}
 }
 
@@ -112,8 +114,8 @@ DaumMapView.propTypes = {
 DaumMapView.defaultProps = {
 	isTracking 				: false,
 	isCompass				: false,
-	isCurrentMarker 		: false,
+	isCurrentMarker 		: true,
 	permissionDeniedView 	: null,
-	permissionsAndroidTitle : "권한 요청",
-	permissionsAndroidMessage: "지도 표시를 위해 권한을 허용 해 주세요.",
+	PermissionsAndroidTitle : "권한 요청",
+	PermissionsAndroidMessage: "지도 표시를 위해 권한을 허용 해 주세요.",
 }

@@ -161,7 +161,8 @@ import MapView from 'react-native-daummap';
 | onRegionChange            | Function  |           | 지도 이동시 변경되는 좌표값 반환 |
 | onMarkerSelect            | Function  |           | 마커 핀을 선택한 경우 |
 | onMarkerPress             | Function  |           | 마커 위 말풍선을 선택한 경우 |
-| onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중, 현재 좌표가 변경된 경우 |
+| onMarkerMoved             | Function  |           | 마커를 이동시킨 경우 |
+| onUpdateCurrentLocation   | Function  |           | 트래킹 모드 사용중 일 때 좌표가 변경된 경우 |
 
 ### initialRegion
 | Property          | Type   | Default      | Description   |
@@ -180,6 +181,7 @@ import MapView from 'react-native-daummap';
 | markerImage       | String |              | 마커 사용자 이미지 |
 | pinColorSelect    | String | red          | 선택된 마커 핀 색상 (blue, yellow, red, image) |
 | markerImageSelect | String |              | 선택된 마커 사용자 이미지 |
+| draggable         | Bool   | false        | 마커 이동 여부 |
 * 사용자 이미지는 추가 위치
     - Android : android/app/src/main/res/drawable
     - iOS : Xcode Project에 추가
