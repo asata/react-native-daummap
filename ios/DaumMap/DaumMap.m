@@ -183,13 +183,21 @@
 - (void)mapView:(MTMapView*)mapView updateCurrentLocation:(MTMapPoint*)location withAccuracy:(MTMapLocationAccuracy)accuracy {
     id event = @{
                  @"action": @"updateCurrentLocation",
-                 // @"accuracy": @(accuracy),
+                 @"accuracyInMeters": @(accuracy),
                  @"coordinate": @{
                          @"latitude": @([location mapPointGeo].latitude),
                          @"longitude": @([location mapPointGeo].longitude)
                          }
                  };
     if (self.onUpdateCurrentLocation) self.onUpdateCurrentLocation(event);
+}
+
+- (void)mapView:(MTMapView*)mapView updateDeviceHeading:(MTMapRotationAngle)headingAngle {
+    id event = @{
+                 @"action": @"currentHeading",
+                 @"headingAngle": @(headingAngle),
+                 };
+    if (self.onUpdateCurrentHeading) self.onUpdateCurrentHeading(event);    
 }
 
 // 단말 사용자가 POI Item을 선택한 경우

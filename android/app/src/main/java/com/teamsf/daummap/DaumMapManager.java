@@ -207,7 +207,8 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		"onMarkerPress", MapBuilder.of("registrationName", "onMarkerPress"),
 		"onMarkerMoved", MapBuilder.of("registrationName", "onMarkerMoved"),
 		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange"),
-		"onUpdateCurrentLocation", MapBuilder.of("registrationName", "onUpdateCurrentLocation")
+		"onUpdateCurrentLocation", MapBuilder.of("registrationName", "onUpdateCurrentLocation"),
+		"onUpdateCurrentHeading", MapBuilder.of("registrationName", "onUpdateCurrentHeading")
 	);
 
 	return map;
@@ -297,8 +298,13 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	@Override
 	public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float headingAngle) {
-		Log.d(TAG, "onCurrentLocationDeviceHeadingUpdate");
+		WritableMap event = new WritableNativeMap();
 
+		WritableMap coordinate = new WritableNativeMap();
+		event.putDouble("headingAngle", headingAngle);
+		event.putString("action", "currentHeading");
+
+		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onUpdateCurrentHeading", event);
 	}
 
     @Override

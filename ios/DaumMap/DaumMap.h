@@ -26,6 +26,8 @@
     @property (nonatomic, copy) RCTDirectEventBlock onMarkerMoved;
     @property (nonatomic, copy) RCTDirectEventBlock onRegionChange;
     @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentLocation;
+    @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentHeading;
+    
 
     @property (nonatomic, assign) float latdouble;
     @property (nonatomic, assign) float londouble;

@@ -59,7 +59,8 @@ export default class DaumMapView extends Component {
 					onMarkerPress={this._onMarkerPress}
 					onMarkerMoved={this._onMarkerMoved}
 					onRegionChange={this._onRegionChange}
-					onUpdateCurrentLocation={this._onUpdateCurrentLocation}/>
+					onUpdateCurrentLocation={this._onUpdateCurrentLocation}
+					onUpdateCurrentHeading={this._onUpdateCurrentHeading} />
 			);
 		} else {
 			return (
@@ -99,17 +100,20 @@ export default class DaumMapView extends Component {
 			this.props.onUpdateCurrentLocation(event.nativeEvent);
 		}
 	}
+
+	_onUpdateCurrentHeading = (event) => {
+		if (this.props.onUpdateCurrentHeading != undefined) {
+			this.props.onUpdateCurrentHeading(event.nativeEvent);
+		}
+	}
 }
 
 DaumMapView.propTypes = {
-	isTracking 				: PropTypes.bool,
-	isCompass 				: PropTypes.bool,
-	isCurrentMarker 		: PropTypes.bool,
-
 	onMarkerSelect 			: PropTypes.func,
 	onMarkerPress 			: PropTypes.func,
 	onRegionChange 			: PropTypes.func,
 	onUpdateCurrentLocation	: PropTypes.func,
+	onUpdateCurrentHeading 	: PropTypes.func,
 }
 
 DaumMapView.defaultProps = {
@@ -117,6 +121,7 @@ DaumMapView.defaultProps = {
 	isTracking 				: false,
 	isCompass				: false,
 	isCurrentMarker 		: true,
+
 	permissionDeniedView 	: null,
 	PermissionsAndroidTitle : "권한 요청",
 	PermissionsAndroidMessage: "지도 표시를 위해 권한을 허용 해 주세요.",
