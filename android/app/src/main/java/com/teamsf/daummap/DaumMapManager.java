@@ -50,7 +50,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 		rMapView.setOpenAPIKeyAuthenticationResultListener(new MapView.OpenAPIKeyAuthenticationResultListener() {
 			public void onDaumMapOpenAPIKeyAuthenticationResult(MapView mapView, int resultCode, String resultMessage) {
-				// Log.i(TAG, String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
+				Log.i(TAG, String.format("Open API Key Authentication Result : code=%d, message=%s", resultCode, resultMessage));
 			}
 		});
 
@@ -153,7 +153,9 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	}
 
 	private void setMapTrackingMode (MapView mMapView) {
-		Log.d(TAG, "setMapTracking");
+		// 트래킹 X, 나침반 X : TrackingModeOff
+		// 트래킹 O, 나침반 O : TrackingModeOnWithHeading
+		// 트래킹 O, 나침반 X : TrackingModeOnWithoutHeading
 		MapView.CurrentLocationTrackingMode trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOff;
 		if (isTracking && isCompass) {
 			trackingModeValue = MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading;
@@ -240,6 +242,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 
 	}
 
+	// 지도의 이동이 완료된 경우
 	@Override
 	public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
 		// Log.d(TAG, "onMapViewMoveFinished");
@@ -248,6 +251,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	/************************************************************************/
 	// Current Location Event 
 	/************************************************************************/
+	// 단말의 현위치 좌표값
 	@Override
 	public void onCurrentLocationUpdate(MapView mapView, MapPoint currentLocation, float accuracyInMeters) {
 		WritableMap event = new WritableNativeMap();
@@ -260,20 +264,22 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 		event.putString("action", "currentLocation");
 
 		appContext.getJSModule(RCTEventEmitter.class).receiveEvent(rnMapView.getId(), "onUpdateCurrentLocation", event);
-
 	}
 
+	// 단말의 방향(Heading) 각도값
 	@Override
 	public void onCurrentLocationDeviceHeadingUpdate(MapView mapView, float headingAngle) {
 		Log.d(TAG, "onCurrentLocationDeviceHeadingUpdate");
 
 	}
 
+	// 현위치 갱신 작업에 실패한 경우 
     @Override
     public void onCurrentLocationUpdateFailed(MapView mapView) {
 
     }
 
+    // 현위치 트랙킹 기능이 사용자에 의해 취소된 경우
     @Override
     public void onCurrentLocationUpdateCancelled(MapView mapView) {
 

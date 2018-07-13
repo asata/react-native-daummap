@@ -19,7 +19,7 @@
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
-
+        
         _mapView = [[MTMapView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                self.bounds.origin.y,
                                                                self.bounds.size.width,
@@ -34,7 +34,7 @@
         _isTracking = false;
         _isCompass = false;
     }
-
+    
     return self;
 }
 
@@ -58,10 +58,10 @@
 
 - (void) setMarkers:(NSArray *)markers {
     NSArray *markerList = [NSArray arrayWithObjects: nil];
-
+    
     for (int i = 0; i < [markers count]; i++) {
         NSDictionary *dict = [markers objectAtIndex:i];
-        NSString *itemName = [dict valueForKey:@"name"];
+        NSString *itemName = [dict valueForKey:@"title"];
         NSString *pinColor = [dict valueForKey:@"pinColor"];
         NSString *selectPinColor = [dict valueForKey:@"selectPinColor"];
         MTMapPOIItemMarkerType markerColor = MTMapPOIItemMarkerTypeBluePin;
@@ -72,7 +72,7 @@
         } else if ([pinColor isEqualToString:@"blue"]) {
             markerColor = MTMapPOIItemMarkerTypeBluePin;
         }
-
+        
         MTMapPOIItemMarkerSelectedType sMarkerColor = MTMapPOIItemMarkerSelectedTypeRedPin;
         if ([selectPinColor isEqualToString:@"red"]) {
             sMarkerColor = MTMapPOIItemMarkerSelectedTypeRedPin;
@@ -83,12 +83,12 @@
         } else if ([selectPinColor isEqualToString:@"none"]) {
             sMarkerColor = MTMapPOIItemMarkerSelectedTypeNone;
         }
-
+        
         MTMapPOIItem* markerItem = [MTMapPOIItem poiItem];
         if (itemName != NULL) markerItem.itemName = itemName;
         float latdouble = [[dict valueForKey:@"latitude"] floatValue];
         float londouble = [[dict valueForKey:@"longitude"] floatValue];
-
+        
         markerItem.mapPoint = [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)];
         markerItem.markerType = markerColor;
         markerItem.markerSelectedType = sMarkerColor;
@@ -96,10 +96,10 @@
         markerItem.draggable = NO;
         markerItem.tag = i;
         markerItem.showDisclosureButtonOnCalloutBalloon = NO;
-
+        
         markerList = [markerList arrayByAddingObject: markerItem];
     }
-
+    
     [_mapView addPOIItems:markerList];
     [_mapView fitMapViewAreaToShowAllPOIItems];
 }
@@ -125,32 +125,30 @@
     }
 }
 
-- (MTMapCurrentLocationTrackingMode) getTrackingMode {
-//    MTMapCurrentLocationTrackingOff : 현위치 트랙킹 모드 및 나침반 모드 Off
-//    MTMapCurrentLocationTrackingOnWithoutHeading : 현위치 트랙킹 모드 On, 단말의 위치에 따라 지도 중심이 이동한다. 나침반 모드는 꺼진 상태
-//    MTMapCurrentLocationTrackingOnWithHeading : 현위치 트랙킹 모드 On + 나침반 모드 On, 단말의 위치에 따라 지도 중심이 이동하며 단말의 방향에 따라 지도가 회전한다.(나침반 모드 On)
-//    MTMapCurrentLocationTrackingOnWithoutHeadingWithoutMapMoving : 현위치 트랙킹 모드 On + 나침반 모드 Off + 지도이동 Off, 지도중심이동을 하지 않는다. 나침반 모드는 꺼진 상태
-//    MTMapCurrentLocationTrackingOnWithHeadingWithoutMapMoving : 현위치 트랙킹 모드 On + 나침반 모드 On + 지도이동 Offm 지도중심이동을 하지 않는다. (나침반 모드 On)
-    return [_mapView currentLocationTrackingMode];
-}
-
 - (void) setIsCurrentMarker: (BOOL)isCurrentMarker {
     [_mapView setShowCurrentLocationMarker:isCurrentMarker];
 }
 
 - (void) setIsTracking:(BOOL)isTracking {
     _isTracking = isTracking;
-    
     [self setMapTracking];
 }
 
 - (void) setIsCompass:(BOOL)isCompass {
     _isCompass = isCompass;
-    
     [self setMapTracking];
 }
 
-- (void) setMapTracking {    
+- (MTMapCurrentLocationTrackingMode) getTrackingMode {
+    // 트래킹 X, 나침반 X, 지도이동 X : MTMapCurrentLocationTrackingOff
+    // 트래킹 O, 나침반 X, 지도이동 O : MTMapCurrentLocationTrackingOnWithoutHeading
+    // 트래킹 O, 나침반 O, 지도이동 O : MTMapCurrentLocationTrackingOnWithHeading
+    // 트래킹 O, 나침반 X, 지도이동 X : MTMapCurrentLocationTrackingOnWithoutHeadingWithoutMapMoving
+    // 트래킹 O, 나침반 O, 지도이동 X : MTMapCurrentLocationTrackingOnWithHeadingWithoutMapMoving
+    return [_mapView currentLocationTrackingMode];
+}
+
+- (void) setMapTracking {
     MTMapCurrentLocationTrackingMode trackingModeValue = MTMapCurrentLocationTrackingOff;
     if (_isTracking && _isCompass) {
         trackingModeValue = MTMapCurrentLocationTrackingOnWithHeading;
@@ -166,10 +164,12 @@
 /****************************************************************/
 // 이벤트 처리 시작
 /****************************************************************/
-- (void)mapView:(MTMapView*)mapView openAPIKeyAuthenticationResultCode:(int)resultCode resultMessage:(NSString*)resultMessage {    
-    [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_latdouble, _londouble)] zoomLevel:_zoomLevel animated:YES];
+// APP KEY 인증 서버에 인증한 결과를 통보받을 수 있다.
+- (void)mapView:(MTMapView*)mapView openAPIKeyAuthenticationResultCode:(int)resultCode resultMessage:(NSString*)resultMessage {
+    [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(_latdouble, _londouble)] zoomLevel:(int)_zoomLevel animated:YES];
 }
 
+// 단말의 현위치 좌표값
 - (void)mapView:(MTMapView*)mapView updateCurrentLocation:(MTMapPoint*)location withAccuracy:(MTMapLocationAccuracy)accuracy {
     id event = @{
                  @"action": @"updateCurrentLocation",
@@ -183,40 +183,43 @@
     if (self.onUpdateCurrentLocation) self.onUpdateCurrentLocation(event);
 }
 
+// 단말 사용자가 POI Item을 선택한 경우
 - (BOOL)mapView:(MTMapView*)mapView selectedPOIItem:(MTMapPOIItem*)poiItem {
     id event = @{
-                @"action": @"markerSelect",
-                @"id": @(poiItem.tag),
-                @"coordinate": @{
-                    @"latitude": @(poiItem.mapPoint.mapPointGeo.latitude),
-                    @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
-                }
-            };
+                 @"action": @"markerSelect",
+                 @"id": @(poiItem.tag),
+                 @"coordinate": @{
+                         @"latitude": @(poiItem.mapPoint.mapPointGeo.latitude),
+                         @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
+                         }
+                 };
     if (self.onMarkerSelect) self.onMarkerSelect(event);
     
     return YES;
 }
 
+// 단말 사용자가 POI Item 아이콘(마커) 위에 나타난 말풍선(Callout Balloon)을 터치한 경우
 - (void)mapView:(MTMapView *)mapView touchedCalloutBalloonOfPOIItem:(MTMapPOIItem *)poiItem {
     id event = @{
-                @"action": @"markerPress",
-                @"id": @(poiItem.tag),
-                @"coordinate": @{
-                    @"latitude": @(poiItem.mapPoint.mapPointGeo.latitude),
-                    @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
-                }
-            };
+                 @"action": @"markerPress",
+                 @"id": @(poiItem.tag),
+                 @"coordinate": @{
+                         @"latitude": @(poiItem.mapPoint.mapPointGeo.latitude),
+                         @"longitude": @(poiItem.mapPoint.mapPointGeo.longitude)
+                         }
+                 };
     if (self.onMarkerPress) self.onMarkerPress(event);
 }
 
+// 지도 중심 좌표가 이동한 경우
 - (void)mapView:(MTMapView*)mapView centerPointMovedTo:(MTMapPoint*)mapCenterPoint {
     id event = @{
                  @"action": @"regionChange",
                  @"coordinate": @{
                          @"latitude": @(mapCenterPoint.mapPointGeo.latitude),
                          @"longitude": @(mapCenterPoint.mapPointGeo.longitude)
-                     }
-             };
+                         }
+                 };
     if (self.onRegionChange) self.onRegionChange(event);
 }
 @end
