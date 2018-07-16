@@ -8,6 +8,8 @@
 # Content
 - [Installation](#installation)
 - [Usage](#usage)
+    - [Daum Map](#daum-map)
+    - [Local Map API](#local-restapi)
 
 ***
 
@@ -137,6 +139,7 @@ project(':react-native-daummap').projectDir = new File(rootProject.projectDir, '
 ***
 
 # Usage
+# Daum Map
 ```
 import MapView from 'react-native-daummap';
 
@@ -200,7 +203,29 @@ import MapView from 'react-native-daummap';
 | latitude          | Number |              | 위도 좌표값      |
 | longitude         | Number |              | 경도 좌표값      |
 
-# Daum Local RestAPI
+***
+
+# Local RestAPI
+```
+import DaumMap from 'react-native-daummap';
+
+componentDidMount () {
+	DaumMap.setRestApiKey("********************************");
+}
+
+
+functionName () {
+    DaumMap.serachAddress("양호동")
+	.then((responseJson) => {
+        // API 결과값 반환
+		console.log(responseJson);
+	}).catch((error) => {
+        // API 호출 중 오류 발생시
+		console.log(error);
+	});
+}
+```
+
 ## 기능
 | 기능명 | Function Name | URL |
 |------|---------------|-----|
@@ -259,27 +284,7 @@ import MapView from 'react-native-daummap';
     - 카테고리 그룹 코드는 Daum API 문서 참고
     - Example : searchCategory("CS2", 36.143099, 128.392905, 100, 1, 10, "accuracy") or searchCategory("CS2", 36.143099, 128.392905, 100)
 
-
-## 사용법
-```
-import DaumMap from 'react-native-daummap';
-
-componentDidMount () {
-	DaumMap.setRestApiKey("********************************");
-}
-
-
-functionName () {
-    DaumMap.serachAddress("양호동")
-	.then((responseJson) => {
-        // API 결과값 반환
-		console.log(responseJson);
-	}).catch((error) => {
-        // API 호출 중 오류 발생시
-		console.log(error);
-	});
-}
-```
-
-
 ***
+
+## License
+MIT © Cory Asata 2018
