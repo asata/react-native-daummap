@@ -40,36 +40,38 @@ include ':react-native-daummap'
 project(':react-native-daummap').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-daummap/android/app')
 ```
 2. In your android/app/build.gradle file, add the :react-native-splash-screen project as a compile-time dependency:
-```
-...
-dependencies {
+    ```
     ...
-    compile project(':react-native-daummap')
-}
-```
-3. Update the MainApplication.java file to use react-native-splash-screen via the following changes:
-```
-...
-import com.teamsf.daummap.DaumMapPackage;
-...
-
-public class MainApplication extends Application implements ReactApplication {
-    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-
+    dependencies {
         ...
-
-        @Override
-        protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new DaumMapPackage()
-            );
-        }
-
-        ...
+        compile project(':react-native-daummap')
     }
-}
-```
+    ```
+
+3. Update the MainApplication.java file to use react-native-splash-screen via the following changes:
+    ```
+    ...
+    import com.teamsf.daummap.DaumMapPackage;
+    ...
+
+    public class MainApplication extends Application implements ReactApplication {
+        private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+            ...
+
+            @Override
+            protected List<ReactPackage> getPackages() {
+                return Arrays.<ReactPackage>asList(
+                    new MainReactPackage(),
+                    new DaumMapPackage()
+                );
+            }
+
+            ...
+        }
+    }
+    ```
+
 ## 3. 다음 지도 SDK 추가
 ##### iOS
 1. [다음 지도 SDK 다운로드](http://apis.map.daum.net/ios/guide/)
@@ -94,36 +96,35 @@ public class MainApplication extends Application implements ReactApplication {
 4. 번들 ID에 개발 앱 번들 ID 등록 후 저장
 5. 상단에 있는 "네이티브 앱 키"를 복사
 6. Info.plist에 KAKAO_APP_KEY 추가
-```
+    ```
     <dict>
         ...
         <key>KAKAO_APP_KEY</key>
         <string>발급 받은 APP KEY</string>
         ...
     </dict>
-```
+    ```
+
 7. 트래킹 모드, 나침반 모드 기능 사용시 Info.plist에 아래 내용 추가
-```
+    ```
     <dict>
         ...
         <key>NSLocationWhenInUseUsageDescription</key>
         <string>권한 이용 설명 기재</string>
         ...
     </dict>
-```
+    ```
 
 #### Android
 4. 패키지명에 개발 앱 패키지명 추가
 5. 키 해시는 터미널에서 아래 명령 수행한 결과 값 입력
-```
-keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass android -keypass android | openssl sha1 -binary | openssl base64
-```
+    ```
+    keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass android -keypass android | openssl sha1 -binary | openssl base64
+    ```
 - Debug일 경우 Keystore 경로는 ~/.android/debug.keystore에 저장되며 비밀번호는 android
 6. 상단에 있는 "네이티브 앱 키"를 복사
 7. AndroidManifest.xml에 Permission 과 APP KEY 추가
-<!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> // 현재 위치 사용시 추가 -->
-```
+    ```
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application>
@@ -131,7 +132,8 @@ keytool -exportcert -alias androiddebugkey -keystore [keystore_path] -storepass 
         <meta-data android:name="com.kakao.sdk.AppKey" android:value="발급 받은 APP KEY"/>
         ...
     </application>
-```
+    ```
+
 ***
 
 # Usage
@@ -148,6 +150,7 @@ import MapView from 'react-native-daummap';
     style={{ width: 300, height: 300, }}
 />
 ```
+
 ## Properties
 | Property                  | Type      | Default   | Description |
 |---------------------------|-----------|-----------|-------------|
@@ -196,5 +199,87 @@ import MapView from 'react-native-daummap';
 |-------------------|--------|--------------|---------------|
 | latitude          | Number |              | 위도 좌표값      |
 | longitude         | Number |              | 경도 좌표값      |
+
+# Daum Local RestAPI
+## 기능
+| 기능명 | Function Name | URL |
+|------|---------------|-----|
+| Rest API Key 설정     | setRestApiKey | |
+| 주소 검색              | serachAddress | https://developers.kakao.com/docs/restapi/local#주소-검색 |
+| 좌표 → 행정구역정보 변환  | getCoordToRegionArea | https://developers.kakao.com/docs/restapi/local#좌표-행정구역정보-변환 |
+| 좌표 → 주소 변환        | getCoordToAddress | https://developers.kakao.com/docs/restapi/local#좌표-주소-변환 |
+| 좌표계 변환            | transCoord | https://developers.kakao.com/docs/restapi/local#좌표계-변환 |
+| 키워드로 장소 검색       | searchKeyword | https://developers.kakao.com/docs/restapi/local#키워드로-장소-검색 |
+| 카테고리로 장소 검색     | searchCategory | https://developers.kakao.com/docs/restapi/local#카테고리로-장소-검색 |
+ * API Key는 "네이티브 앱 키"가 아닌 "REST API 키"입니다.
+     - 네이티브 앱 키 사용시 에러가 발생합니다.
+ * 각 API 호출 반환값은 Daum API 문서를 참고 해 주세요.
+
+## 각 함수 설명
+ * Rest API Key 설정 (setRestApiKey)
+    - RestAPI Key 설정
+    - Parameter : API Key(필수)
+    - Example : setRestApiKey(API_Key)
+
+
+* 주소 검색 (serachAddress)
+    - 주소를 지도 위에 정확하게 표시하기 위해 해당 주소의 좌표 정보를 제공
+    - Parameter : 검색어(필수), 결과 페이지 번호(선택, 기본값 : 1), 한 페이지에 보여질 문서의 개수(선택, 기본값 : 10)
+    - Example : serachAddress("양호동", 1, 10) or serachAddress("양호동")
+
+
+* 좌표 → 행정구역정보 변환 (getCoordToRegionArea)
+    - 해당 좌표에 부합되는 행정동, 법정동을 얻는 API
+    - Parameter : 위도(필수), 경도(필수), 입력되는 값에 대한 좌표 체계(선택, 기본값 : WGS84), 결과에 출력될 좌표 체계(선택, 기본값 : WGS84), 결과 언어(선택, 기본값 : ko)
+    - Example : getCoordToRegionArea(36.143099, 128.392905, "WGS84", "WGS84", "ko") or getCoordToRegionArea(36.143099, 128.392905)
+
+
+* 좌표 → 주소 변환 (getCoordToRegionArea)
+    - 해당 좌표의 구주소와 도로명 주소 정보를 표출하는 API
+    - Parameter : 위도(필수), 경도(필수), 입력되는 값에 대한 좌표 체계(선택, 기본값 : WGS84)
+    - Example : getCoordToAddress(36.143099, 128.392905, "WGS84") or getCoordToAddress(36.143099, 128.392905)
+
+
+* 좌표계 변환 (transCoord)
+    - x, y 값과 입력/출력 좌표계를 지정하여 변환된 좌표값
+    - Parameter : 위도(필수), 경도(필수), 입력되는 값에 대한 좌표 체계(선택, 기본값 : WGS84), 결과에 출력될 좌표 체계(선택, 기본값 : WGS84)
+    - Example : transCoord(36.143099, 128.392905, "WGS84", "WGS84") or transCoord(36.143099, 128.392905)
+
+
+* 키워드로 장소 검색 (searchKeyword)
+    - 질의어에 매칭된 장소 검색 결과를 지정된 정렬 기준에 따라 제공
+    - Parameter : 검색어(필수), 카테고리 그룹 코드(선택, 기본값 : ""), 위도(선택), 경도(선택), 중심 좌표부터의 반경거리(선택, 기본값 : 500, 단위 : m, 0~20000), 결과 페이지 번호(선택, 기본값 : 1, 1~45), 한 페이지에 보여질 문서의 개수(선택, 기본값 : 15, 1~15), 결과 정렬 순서(선택, 기본값 : accuracy)
+    - 카테고리 그룹 코드는 Daum API 문서 참고
+    - Example : searchKeyword("편의점", "CS2", 36.143099, 128.392905, 100, 1, 10, "accuracy") or searchKeyword("편의점")
+
+
+* 카테고리로 장소 검색 (searchCategory)
+    - 미리 정의된 그룹코드에 해당하는 장소 검색 결과를 지정된 정렬 기준에 따라 제공
+    - Parameter : 카테고리 그룹 코드(필수), 위도(필수), 경도(필수), 중심 좌표부터의 반경거리(필수, 기본값 : 500, 단위 : m, 0~20000), 결과 페이지 번호(선택, 기본값 : 1, 1~45), 한 페이지에 보여질 문서의 개수(선택, 기본값 : 15, 1~15), 결과 정렬 순서(선택, 기본값 : accuracy)
+    - 카테고리 그룹 코드는 Daum API 문서 참고
+    - Example : searchCategory("CS2", 36.143099, 128.392905, 100, 1, 10, "accuracy") or searchCategory("CS2", 36.143099, 128.392905, 100)
+
+
+## 사용법
+```
+import DaumMap from 'react-native-daummap';
+
+componentDidMount () {
+	DaumMap.setRestApiKey("********************************");
+}
+
+
+functionName () {
+    DaumMap.serachAddress("양호동")
+	.then((responseJson) => {
+        // API 결과값 반환
+		console.log(responseJson);
+	}).catch((error) => {
+        // API 호출 중 오류 발생시
+		console.log(error);
+	});
+}
+```
+
 
 ***
