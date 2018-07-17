@@ -31,6 +31,14 @@
 3. In XCode, in the project navigator, select your project. Add libDaumMap.a to your project's Build Phases ➜ Link Binary With Libraries
 4. Select your project → Build Settings → Search Paths → Header Search Paths to add:
     `$(SRCROOT)/../node_modules/react-native-daummap/ios/DaumMap`
+5. Select your project → "General" or "Build Phases" → Link Binary With Libraries에 아래 항목 추가
+    - OpenGLES.framework
+    - SystemConfigure.framework
+    - CoreLocation.framework
+    - QuartzCore.framework
+    - libstdc++.6.dylib
+    - libxml2.dylib
+    - libsqlite3.dylib
 
 #### Android
 1. In your android/settings.gradle file, make the following additions:
@@ -113,6 +121,9 @@ project(':react-native-daummap').projectDir = new File(rootProject.projectDir, '
         ...
     </dict>
     ```
+8. 프로젝트 선택 → Build Settings에서 아래 항목 수정
+    - Objective-C Automatic Reference Counting : No 선택
+    - Enable Bitcode : No 선택
 
 #### Android
 4. 패키지명에 개발 앱 패키지명 추가
