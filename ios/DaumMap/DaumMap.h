@@ -27,11 +27,12 @@
     @property (nonatomic, copy) RCTDirectEventBlock onRegionChange;
     @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentLocation;
     @property (nonatomic, copy) RCTDirectEventBlock onUpdateCurrentHeading;
-    
+
 
     @property (nonatomic, assign) float latdouble;
     @property (nonatomic, assign) float londouble;
     @property (nonatomic, assign) NSInteger zoomLevel;
+    @property (nonatomic, assign) NSInteger tagIDX;
 
     @property (nonatomic, assign) BOOL isTracking;
     @property (nonatomic, assign) BOOL isCompass;

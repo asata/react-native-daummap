@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "DaumMap.h"
 #import <DaumMap/MTMapView.h>
+#import <DaumMap/MTMapCircle.h>
+#import <DaumMap/MTMapPolyline.h>
 
 // import RCTEventDispatcher
 #if __has_include(<React/RCTEventDispatcher.h>)
@@ -19,22 +21,23 @@
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
     if ((self = [super init])) {
         _eventDispatcher = eventDispatcher;
-        
+
         _mapView = [[MTMapView alloc] initWithFrame:CGRectMake(self.bounds.origin.x,
                                                                self.bounds.origin.y,
                                                                self.bounds.size.width,
                                                                self.bounds.size.height)];
         _mapView.delegate = self;
         _mapView.baseMapType = MTMapTypeHybrid;
-        
-        _latdouble = 36.143099;
-        _londouble = 128.392905;
-        _zoomLevel = 2;
-        
+
+        _latdouble  = 36.143099;
+        _londouble  = 128.392905;
+        _zoomLevel  = 2;
+        _tagIDX     = 0;
+
         _isTracking = false;
-        _isCompass = false;
+        _isCompass  = false;
     }
-    
+
     return self;
 }
 
@@ -57,8 +60,8 @@
 }
 
 - (void) setMarkers:(NSArray *)markers {
-    NSArray *markerList = [NSArray arrayWithObjects: nil];
-    
+    NSArray *markerList = [NSArray arrayWithObjects: NULL];
+
     for (int i = 0; i < [markers count]; i++) {
         NSDictionary *dict = [markers objectAtIndex:i];
         NSString *itemName = [dict valueForKey:@"title"];
@@ -74,7 +77,7 @@
         } else if ([pinColor isEqualToString:@"image"]) {
             markerType = MTMapPOIItemMarkerTypeCustomImage;
         }
-        
+
         MTMapPOIItemMarkerSelectedType sMarkerType = MTMapPOIItemMarkerSelectedTypeRedPin;
         if ([selectPinColor isEqualToString:@"red"]) {
             sMarkerType = MTMapPOIItemMarkerSelectedTypeRedPin;
@@ -87,12 +90,12 @@
         } else if ([selectPinColor isEqualToString:@"none"]) {
             sMarkerType = MTMapPOIItemMarkerSelectedTypeNone;
         }
-        
+
         MTMapPOIItem* markerItem = [MTMapPOIItem poiItem];
         if (itemName != NULL) markerItem.itemName = itemName;
         float latdouble = [[dict valueForKey:@"latitude"] floatValue];
         float londouble = [[dict valueForKey:@"longitude"] floatValue];
-        
+
         markerItem.mapPoint = [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)];
         markerItem.markerType = markerType;
         if (markerType == MTMapPOIItemMarkerTypeCustomImage) {
@@ -107,10 +110,10 @@
         markerItem.draggable = draggable;
         markerItem.tag = i;
         markerItem.showDisclosureButtonOnCalloutBalloon = NO;
-        
+
         markerList = [markerList arrayByAddingObject: markerItem];
     }
-    
+
     [_mapView addPOIItems:markerList];
 }
 
@@ -131,7 +134,7 @@
     if ([region valueForKey:@"latitude"] != [NSNull null] && [region valueForKey:@"longitude"] != [NSNull null]) {
         float latdouble = [[region valueForKey:@"latitude"] floatValue];
         float londouble = [[region valueForKey:@"longitude"] floatValue];
-        
+
         [_mapView setMapCenterPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)] animated:YES];
     }
 }
@@ -150,12 +153,101 @@
     [self setMapTracking];
 }
 
+- (void) setPolyLines:(NSDictionary *) polyLines {
+    [_mapView removeAllPolylines];
+
+    MTMapPolyline *polyline1 = [MTMapPolyline polyLine];
+
+    NSString *polyLineColor = [[polyLines valueForKey:@"color"] lowercaseString];
+    NSArray  *polyLineArray = [polyLines valueForKey:@"points"];
+    NSInteger tagIdx    = 0;
+    if ([polyLines valueForKey:@"tag"] != [NSNull null] && [polyLines valueForKey:@"tag"] > 0) {
+        tagIdx = [[polyLines valueForKey:@"tag"] intValue];
+    } else {
+        tagIdx = _tagIDX++;
+    }
+    polyline1.tag= tagIdx;
+
+    for (int i = 0; i < [polyLineArray count]; i++) {
+        NSDictionary *dict = [polyLineArray objectAtIndex:i];
+        float latdouble     = [[dict valueForKey:@"latitude"] floatValue];
+        float londouble     = [[dict valueForKey:@"longitude"] floatValue];
+        [polyline1 addPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)]];
+    }
+
+    UIColor *color = [self getColor:polyLineColor];
+
+    polyline1.polylineColor = color;
+    [_mapView addPolyline:polyline1];
+}
+
+- (void) setCircles: (NSArray *) circles {
+    [_mapView removeAllCircles];
+
+    for (int i = 0; i < [circles count]; i++) {
+        NSDictionary *dict = [circles objectAtIndex:i];
+        float latdouble = [[dict valueForKey:@"latitude"] floatValue];
+        float londouble = [[dict valueForKey:@"longitude"] floatValue];
+        NSString *lineColorStr = [[dict valueForKey:@"lineColor"] lowercaseString];
+        NSString *fillColorStr = [[dict valueForKey:@"fillColor"] lowercaseString];
+        NSInteger radius    = 50;
+        NSInteger lineWidth = 10;
+        NSInteger tagIdx    = 0;
+
+        if ([dict valueForKey:@"lineWidth"] != [NSNull null] && [dict valueForKey:@"lineWidth"] > 0) {
+            lineWidth = [[dict valueForKey:@"lineWidth"] intValue];
+        }
+        if ([dict valueForKey:@"radius"] != [NSNull null] && [dict valueForKey:@"radius"] > 0) {
+            radius = [[dict valueForKey:@"radius"] intValue];
+        }
+        if ([dict valueForKey:@"tag"] != [NSNull null] && [dict valueForKey:@"tag"] > 0) {
+            tagIdx = [[dict valueForKey:@"tag"] intValue];
+        } else {
+            tagIdx = _tagIDX++;
+        }
+
+        UIColor *lineColor = [self getColor:lineColorStr];
+        UIColor *fillColor = [self getColor:fillColorStr];
+
+        MTMapCircle *circle1 = [MTMapCircle circle];
+        circle1.circleCenterPoint = [MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)];
+        circle1.circleLineColor = lineColor;
+        circle1.circleFillColor = fillColor;
+        circle1.circleLineWidth = lineWidth;
+        circle1.circleRadius    = radius;
+        circle1.tag             = tagIdx;
+
+        [_mapView addCircle:circle1];
+    }
+}
+
+- (UIColor *) getColor: (NSString *) colorStr {
+    if ([colorStr isEqualToString:@"red"]) {
+        return [UIColor redColor];
+    } else if ([colorStr isEqualToString:@"blue"]) {
+        return [UIColor blueColor];
+    } else if ([colorStr isEqualToString:@"yellow"]) {
+        return [UIColor yellowColor];
+    } else if ([colorStr isEqualToString:@"black"]) {
+        return [UIColor blackColor];
+    } else if ([colorStr isEqualToString:@"green"]) {
+        return [UIColor greenColor];
+    } else if ([colorStr isEqualToString:@"green"]) {
+        return [UIColor greenColor];
+    } else if ([colorStr isEqualToString:@"white"]) {
+        return [UIColor whiteColor];
+    } else {
+        return [UIColor whiteColor];
+    }
+}
+
 - (MTMapCurrentLocationTrackingMode) getTrackingMode {
     // 트래킹 X, 나침반 X, 지도이동 X : MTMapCurrentLocationTrackingOff
     // 트래킹 O, 나침반 X, 지도이동 O : MTMapCurrentLocationTrackingOnWithoutHeading
     // 트래킹 O, 나침반 O, 지도이동 O : MTMapCurrentLocationTrackingOnWithHeading
     // 트래킹 O, 나침반 X, 지도이동 X : MTMapCurrentLocationTrackingOnWithoutHeadingWithoutMapMoving
     // 트래킹 O, 나침반 O, 지도이동 X : MTMapCurrentLocationTrackingOnWithHeadingWithoutMapMoving
+
     return [_mapView currentLocationTrackingMode];
 }
 
@@ -168,7 +260,7 @@
     } else {
         trackingModeValue = MTMapCurrentLocationTrackingOff;
     }
-    
+
     [_mapView setCurrentLocationTrackingMode:trackingModeValue];
 }
 
@@ -198,7 +290,7 @@
                  @"action": @"currentHeading",
                  @"headingAngle": @(headingAngle),
                  };
-    if (self.onUpdateCurrentHeading) self.onUpdateCurrentHeading(event);    
+    if (self.onUpdateCurrentHeading) self.onUpdateCurrentHeading(event);
 }
 
 // 단말 사용자가 POI Item을 선택한 경우
@@ -212,7 +304,7 @@
                          }
                  };
     if (self.onMarkerSelect) self.onMarkerSelect(event);
-    
+
     return YES;
 }
 

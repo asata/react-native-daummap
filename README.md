@@ -123,7 +123,6 @@ project(':react-native-daummap').projectDir = new File(rootProject.projectDir, '
     ```
 8. 프로젝트 선택 → Build Settings에서 아래 항목 수정
     - Objective-C Automatic Reference Counting : No 선택
-    - Enable Bitcode : No 선택
 
 #### Android
 4. 패키지명에 개발 앱 패키지명 추가
@@ -168,8 +167,10 @@ import MapView from 'react-native-daummap';
 | initialRegion             | Object    | {}        | 지도 초기 화면 좌표 및 확대/축소 레벨 |
 | style                     |           | {}        | 지도 View Style |
 | mapType                   | String    | Standard  | 지도 종류 (기본 지도 - Standard, 위성 지도 - Satellite, 하이브리드 지도 - Hybrid)
-| markers                   | Object    | {}        | 지도 위에 추가되는 마커 정보 |
+| markers                   | Array     | {}        | 지도 위에 추가되는 마커 정보 |
 | region                    | Object    | {}        | 지도 중심점 좌표, 지도 이동시 사용 |
+| polyLines                 | Object    | {}        | 정해진 좌표로 선을 그림 |
+| circles                   | Array     | {}        | 지정한 좌표에 원을 그림 |
 | isTracking                | Bool      | false     | 현위치 트래킹 모드 (지도화면 중심을 단말의 현재 위치로 이동) |
 | isCompass                 | Bool      | false     | 나침반 모드 (단말의 방향에 따라 지도화면이 회전), 트래킹 모드를 활성화 시켜야 사용 가능 |
 | isCurrentMarker           | Bool      | false     | 현 위치를 표시하는 마커 표시 여부, 트래킹 모드 활성화시 true |
@@ -210,6 +211,23 @@ import MapView from 'react-native-daummap';
 |-------------------|--------|--------------|---------------|
 | latitude          | Number |              | 위도 좌표값      |
 | longitude         | Number |              | 경도 좌표값      |
+
+### polyLines
+| Property          | Type   | Default      | Description   |
+|-------------------|--------|--------------|---------------|
+| tag               | Number |              | 고유 IDX 값     |
+| color             | String |              | 선 색상 (blue, yellow, red, white, black, green) |
+| points            | Array  |              | 위경도 좌표값 배열 {latitude: ??, longitude: ??} |
+
+### circles
+| Property          | Type   | Default      | Description   |
+|-------------------|--------|--------------|---------------|
+| latitude          | Number | 36.143099    | 위도 좌표값      |
+| longitude         | Number | 128.392905   | 경도 좌표값      |
+| lineColor         | String |              | 원 테두리 색상 (blue, yellow, red, white, black, green) |
+| fillColor         | String |              | 원 내부 색상 (blue, yellow, red, white, black, green) |
+| lineWidth         | Number | 10           | 원 테두리 굵기   |
+| radius            | Number | 50           | 원 반지름 (단위 : m) |
 
 ***
 
