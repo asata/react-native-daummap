@@ -1,8 +1,5 @@
 # react-native-daummap
 
----
-* react-native 다음 지도
-
 [![NPM](https://nodei.co/npm/react-native-daummap.png)](https://nodei.co/npm/react-native-daummap/)
 
 # Content

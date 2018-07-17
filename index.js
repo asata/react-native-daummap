@@ -130,7 +130,7 @@ export default class DaumMapView extends Component {
 			});
 		}
 
-		let option 	= makeRequestOption();
+		let option 	= makeRequestHeader();
 		let url 	= makeRequestURL(
 						"search/address.json",
 						{
