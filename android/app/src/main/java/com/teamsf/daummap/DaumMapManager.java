@@ -207,22 +207,24 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	public void setPolyLines(MapView mMapView, ReadableMap polyLines) {
 		mMapView.removeAllPolylines();
 
-		MapPolyline polyline1		= new MapPolyline();
-		String lineColorStr 		= polyLines.hasKey("color") ? polyLines.getString("color").toLowerCase() : "white";
-		ReadableArray polyLineList 	= polyLines.getArray("points");
+		if (polyLines.hasKey("points")) {
+			MapPolyline polyline1		= new MapPolyline();
+			String lineColorStr 		= polyLines.hasKey("color") ? polyLines.getString("color").toLowerCase() : "white";
+			ReadableArray polyLineList 	= polyLines.getArray("points");
 
-		polyline1.setLineColor(getColor(lineColorStr));
+			polyline1.setLineColor(getColor(lineColorStr));
 
-		for (int i = 0; i < polyLineList.size(); i++) {
-			ReadableMap polyLineInfo= polyLineList.getMap(i);
-			double 	latitude 		= polyLineInfo.hasKey("latitude") ? polyLineInfo.getDouble("latitude") : 36.143099;
-			double 	longitude 		= polyLineInfo.hasKey("longitude") ? polyLineInfo.getDouble("longitude") : 128.392905;
-			int 	tagIdx			= polyLineInfo.hasKey("tag") ? polyLineInfo.getInt("tag") : tagIDX++;
+			for (int i = 0; i < polyLineList.size(); i++) {
+				ReadableMap polyLineInfo= polyLineList.getMap(i);
+				double 	latitude 		= polyLineInfo.hasKey("latitude") ? polyLineInfo.getDouble("latitude") : 36.143099;
+				double 	longitude 		= polyLineInfo.hasKey("longitude") ? polyLineInfo.getDouble("longitude") : 128.392905;
+				int 	tagIdx			= polyLineInfo.hasKey("tag") ? polyLineInfo.getInt("tag") : tagIDX++;
 
-			polyline1.addPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+				polyline1.addPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude));
+			}
+
+			mMapView.addPolyline(polyline1);
 		}
-
-		mMapView.addPolyline(polyline1);
 	}
 
 	@ReactProp(name = "circles")

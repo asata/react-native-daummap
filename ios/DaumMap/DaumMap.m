@@ -156,29 +156,31 @@
 - (void) setPolyLines:(NSDictionary *) polyLines {
     [_mapView removeAllPolylines];
 
-    MTMapPolyline *polyline1 = [MTMapPolyline polyLine];
+    if ([polyLines valueForKey:@"points"] != [NSNull null]) {
+        MTMapPolyline *polyline1 = [MTMapPolyline polyLine];
 
-    NSString *polyLineColor = [[polyLines valueForKey:@"color"] lowercaseString];
-    NSArray  *polyLineArray = [polyLines valueForKey:@"points"];
-    NSInteger tagIdx    = 0;
-    if ([polyLines valueForKey:@"tag"] != [NSNull null] && [polyLines valueForKey:@"tag"] > 0) {
-        tagIdx = [[polyLines valueForKey:@"tag"] intValue];
-    } else {
-        tagIdx = _tagIDX++;
+        NSString *polyLineColor = [[polyLines valueForKey:@"color"] lowercaseString];
+        NSArray  *polyLineArray = [polyLines valueForKey:@"points"];
+        NSInteger tagIdx    = 0;
+        if ([polyLines valueForKey:@"tag"] != [NSNull null] && [polyLines valueForKey:@"tag"] > 0) {
+            tagIdx = [[polyLines valueForKey:@"tag"] intValue];
+        } else {
+            tagIdx = _tagIDX++;
+        }
+        polyline1.tag= tagIdx;
+
+        for (int i = 0; i < [polyLineArray count]; i++) {
+            NSDictionary *dict = [polyLineArray objectAtIndex:i];
+            float latdouble     = [[dict valueForKey:@"latitude"] floatValue];
+            float londouble     = [[dict valueForKey:@"longitude"] floatValue];
+            [polyline1 addPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)]];
+        }
+
+        UIColor *color = [self getColor:polyLineColor];
+
+        polyline1.polylineColor = color;
+        [_mapView addPolyline:polyline1];
     }
-    polyline1.tag= tagIdx;
-
-    for (int i = 0; i < [polyLineArray count]; i++) {
-        NSDictionary *dict = [polyLineArray objectAtIndex:i];
-        float latdouble     = [[dict valueForKey:@"latitude"] floatValue];
-        float londouble     = [[dict valueForKey:@"longitude"] floatValue];
-        [polyline1 addPoint:[MTMapPoint mapPointWithGeoCoord:MTMapPointGeoMake(latdouble, londouble)]];
-    }
-
-    UIColor *color = [self getColor:polyLineColor];
-
-    polyline1.polylineColor = color;
-    [_mapView addPolyline:polyline1];
 }
 
 - (void) setCircles: (NSArray *) circles {
