@@ -276,6 +276,7 @@ public class DaumMapManager extends SimpleViewManager<View> implements MapView.M
 	Map<String, Map<String, String>> map = MapBuilder.of(
 		"onMarkerSelect", MapBuilder.of("registrationName", "onMarkerSelect"),
 		"onMarkerPress", MapBuilder.of("registrationName", "onMarkerPress"),
+		"onMarkerPressEvent", MapBuilder.of("registrationName", "onMarkerPressEvent"),
 		"onMarkerMoved", MapBuilder.of("registrationName", "onMarkerMoved"),
 		"onRegionChange", MapBuilder.of("registrationName", "onRegionChange"),
 		"onUpdateCurrentLocation", MapBuilder.of("registrationName", "onUpdateCurrentLocation"),
