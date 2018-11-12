@@ -36,9 +36,9 @@
     - SystemConfigure.framework
     - CoreLocation.framework
     - QuartzCore.framework
-    - libstdc++.6.dylib
-    - libxml2.dylib
-    - libsqlite3.dylib
+    - libstdc++.6.dylib (libc++.tbd in XCode 10)
+    - libxml2.dylib (libxml2.tbd in Xcode 10)
+    - libsqlite3.dylib (libsqlite3.tbd in Xcode 10)
 
 #### Android
 1. In your android/settings.gradle file, make the following additions:
