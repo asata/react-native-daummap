@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB41258221F99E49000B83AA /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB41258121F99E48000B83AA /* DaumMap.framework */; };
 		CB51EB0A20B50D0900CEC4FC /* DaumMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */; };
 		CB51EB0B20B50D0900CEC4FC /* DaumMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CB51EB0920B50D0900CEC4FC /* DaumMap.m */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CB41258121F99E48000B83AA /* DaumMap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DaumMap.framework; sourceTree = "<group>"; };
 		CB51EB0620B50D0800CEC4FC /* DaumMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMapManager.h; sourceTree = "<group>"; };
 		CB51EB0720B50D0800CEC4FC /* DaumMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DaumMapManager.m; sourceTree = "<group>"; };
 		CB51EB0820B50D0800CEC4FC /* DaumMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DaumMap.h; sourceTree = "<group>"; };
@@ -36,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB41258221F99E49000B83AA /* DaumMap.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +48,7 @@
 		CBFBFCD220B50B8500C0C250 = {
 			isa = PBXGroup;
 			children = (
+				CB41258121F99E48000B83AA /* DaumMap.framework */,
 				CBFBFCDD20B50B8500C0C250 /* DaumMap */,
 				CBFBFCDC20B50B8500C0C250 /* Products */,
 			);
@@ -251,8 +255,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(inherited)",
 					"$(PROJECT_DIR)/../../../ios/**/**",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -269,8 +273,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(inherited)",
 					"$(PROJECT_DIR)/../../../ios/**/**",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
