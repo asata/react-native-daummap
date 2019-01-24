@@ -2,17 +2,20 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
 	requireNativeComponent,
+	findNodeHandle,
+	NativeModules,
 	Platform,
 	PermissionsAndroid,
 	View,
 } from 'react-native';
 
 let REST_API_KEY 	= "";
+const DaumMapManager= Platform.OS === 'ios' ? NativeModules.DaumMapManager : NativeModules.DaumMapModule;
 const DaumMap 		= requireNativeComponent('DaumMap', DaumMapView, {
 	nativeOnly: {
-		onMarkerSelect: true,
-		onMarkerPress: true,
-		onRegionChange: true
+		onMarkerSelect	: true,
+		onMarkerPress	: true,
+		onRegionChange	: true
 	}
 })
 
@@ -106,6 +109,13 @@ export default class DaumMapView extends Component {
 		if (this.props.onUpdateCurrentHeading != undefined) {
 			this.props.onUpdateCurrentHeading(event.nativeEvent);
 		}
+	}
+
+	/************************************************************************************************
+	 * Daum Map Function
+	 ************************************************************************************************/
+	clearMapCache() {
+		DaumMapManager.clearMapCache(findNodeHandle(this.map));
 	}
 
 	/************************************************************************************************

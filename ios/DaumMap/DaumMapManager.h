@@ -7,6 +7,8 @@
 #import "React/RCTViewManager.h" // Required when used as a Pod in a Swift project
 #endif
 
-@interface DaumMapManager : RCTViewManager
+#import <DaumMap/MTMapView.h>
 
+@interface DaumMapManager : RCTViewManager
+    @property(nonatomic,strong)DaumMap *map;
 @end

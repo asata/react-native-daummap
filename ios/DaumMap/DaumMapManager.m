@@ -11,7 +11,8 @@
 RCT_EXPORT_MODULE();
 // Return the native view that represents your React component
 - (UIView *) view {
-  return [[DaumMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+    _map = [[DaumMap alloc] initWithEventDispatcher:self.bridge.eventDispatcher];
+    return _map;
 }
 
 RCT_EXPORT_VIEW_PROPERTY(initialRegion, NSDictionary)
@@ -30,4 +31,8 @@ RCT_EXPORT_VIEW_PROPERTY(onRegionChange, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onUpdateCurrentLocation, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onUpdateCurrentHeading, RCTDirectEventBlock)
 
+// 임시 디렉토리에 저장된 지도 타일 캐쉬 데이터를 모두 삭제
+RCT_EXPORT_METHOD(clearMapCache:(nonnull NSNumber *)reactTag) {
+    [MTMapView clearMapTilePersistentCache];
+}
 @end
