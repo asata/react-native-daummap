@@ -1,6 +1,6 @@
 {
     "name": "react-native-daummap",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "description": "react-native use daum map",
     "main": "index.js",
     "scripts": {
@@ -17,19 +17,6 @@
         "react-naive",
         "daum map"
     ],
-    "rnpm": {
-        "ios": {
-            "sharedLibraries": [
-                "libxml2",
-                "libsqlite3",
-                "SystemConfiguration",
-                "CoreLocation",
-                "OpenGLES",
-                "QuartzCore",
-                "libc++"
-            ]
-        }
-    },
     "author": "JeongHun Kang <asata@teamsf.co.kr>",
     "license": "MIT",
     "bugs": {
