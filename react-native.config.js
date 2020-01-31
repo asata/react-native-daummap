@@ -1,16 +1,18 @@
 module.exports = {
-  project: {
-    ios: {
-        "sharedLibraries": [
-            "libxml2",
-            "libsqlite3",
-            "SystemConfiguration",
-            "CoreLocation",
-            "OpenGLES",
-            "QuartzCore",
-            "libc++"
-        ]
-    },
-    android: {}, // grouped into "project"
+  dependency: {
+    platforms: {
+        ios: {
+            sharedLibraries: [
+                "SystemConfiguration",
+                "CoreLocation",
+                "OpenGLES",
+                "QuartzCore",
+                "libc++",
+                "libxml2",
+                "libsqlite3"
+            ]
+        },
+        android: {},
+    }
   },
 };
