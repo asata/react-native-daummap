@@ -21,7 +21,20 @@
 `npm i -S react-native-daummap`
 
 ## 2. Plugin Installation
-### Mostly automatic installation
+### RN >= 6.0
+#### iOS
+
+```
+cd pod
+pod install
+```
+
+#### Android
+
+Mostly automatic installation
+
+### RN < 6.0
+
 `react-native link react-native-daummap`
 
 ### Manual installation
